@@ -93,3 +93,12 @@ skip-magic-trailing-comma = false
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402"]
+
+[tool.pyright]
+include=["chemvae/**"]
+exclude=["**/__init__.py", "**/__pycache__"]
+verboseOutput=true
+pythonVersion="3.11"
+typeCheckingMode="standard"
+reportMissingImports= true
+reportMissingTypeStubs= false

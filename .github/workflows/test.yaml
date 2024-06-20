@@ -1,0 +1,17 @@
+name: Action Name
+
+on:
+  push:
+    branches:
+      - "**" # run every time
+
+jobs:
+  testjob:
+    runs-on: ubuntu-latest
+    steps: # name,uses,run
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+      - run: python -c "print('hello')"
+      - name: echo hello
+        run: echo "hello"
