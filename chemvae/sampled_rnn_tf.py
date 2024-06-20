@@ -1,26 +1,38 @@
-'''
-sampled_rnn - based on rnn method in tensorflow_backend.py in keras
+"""sampled_rnn - based on rnn method in tensorflow_backend.py in keras
 
 Main difference is in how to handle dimensions of states.
 
 
 # think carefully about the distribution of the random sampled variables...
 
-'''
+"""
 
 
-def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
-                go_backwards=False, mask=None, rec_dp_constants=None,
-                unroll=False, input_length=None):
+def sampled_rnn(
+    step_function,
+    inputs,
+    initial_states,
+    units,
+    random_seed,
+    go_backwards=False,
+    mask=None,
+    rec_dp_constants=None,
+    unroll=False,
+    input_length=None,
+):
     """Iterates over the time dimension of a tensor.
     # Arguments
         step_function: RNN step function.
-            Parameters:
+
+    Parameters
+    ----------
                 input: tensor with shape `(samples, ...)` (no time dimension),
                     representing input for the batch of samples at a certain
                     time step.
                 states: list of tensors.
-            Returns:
+
+    Returns
+    -------
                 output: tensor with shape `(samples, output_dim)`
                     (no time dimension).
                 new_states: list of tensors, same length and shapes
@@ -57,32 +69,32 @@ def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
         ValueError: if `unroll` is `True` but input timestep is not a fixed number.
         ValueError: if `mask` is provided (not `None`) but states is not provided
             (`len(states)` == 0).
-   """
+
+    """
     import numpy as np
+
     np.random.seed(random_seed)
     import tensorflow as tf
-    tf.set_random_seed(random_seed)
-    from tensorflow.python.ops import tensor_array_ops
-    from tensorflow.python.ops import control_flow_ops
-    from tensorflow.python.framework import constant_op
-    from tensorflow.python.framework import dtypes
-    import keras.backend as K
+
+    tf.compat.v1.set_random_seed(random_seed)
+    import tensorflow.python.keras.backend as K
+    from tensorflow.python.ops import control_flow_ops, tensor_array_ops
 
     ndim = len(inputs.get_shape())
     if ndim < 3:
-        raise ValueError('Input should be at least 3D.')
+        raise ValueError("Input should be at least 3D.")
 
-    if unroll == True:
-        raise ValueError('Unrolling not implemented in sampled_rnn')
+    if unroll:
+        raise ValueError("Unrolling not implemented in sampled_rnn")
     if mask is not None:
-        raise ValueError('Masking not implemented in sampled_rnn')
+        raise ValueError("Masking not implemented in sampled_rnn")
 
     # this switches dims to (time, samples, ...)
     axes = [1, 0] + list(range(2, ndim))
     inputs = tf.transpose(inputs, (axes))
 
     if go_backwards:
-        inputs = reverse(inputs, 0)
+        inputs = np.flip(inputs, 0)
 
     states = tuple(initial_states)
 
@@ -95,25 +107,28 @@ def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
     #   Generates one for each sample in the batch
 
     num_samples = tf.shape(inputs)[1]
-    output_dim = int(initial_states[0].get_shape()[-1])
-    random_cutoff_prob = tf.random_uniform(
-        (num_samples,), minval=0., maxval=1.)
+    # commenting bc it was unused.
+    # output_dim = int(initial_states[0].get_shape()[-1])
+    random_cutoff_prob = tf.random.uniform((num_samples,), minval=0.0, maxval=1.0)
 
     # Ignore constants for the first run
-    outputs, _ = step_function(inputs[0], {'initial_states': initial_states,
-                                           'random_cutoff_prob': random_cutoff_prob,
-                                           'rec_dp_mask': rec_dp_constants})
+    outputs, _ = step_function(
+        inputs[0],
+        {
+            "initial_states": initial_states,
+            "random_cutoff_prob": random_cutoff_prob,
+            "rec_dp_mask": rec_dp_constants,
+        },
+    )
 
     output_ta = tensor_array_ops.TensorArray(
-        dtype=outputs.dtype,
-        size=time_steps,
-        tensor_array_name='output_ta')
+        dtype=outputs.dtype, size=time_steps, tensor_array_name="output_ta"
+    )
     input_ta = tensor_array_ops.TensorArray(
-        dtype=inputs.dtype,
-        size=time_steps,
-        tensor_array_name='input_ta')
+        dtype=inputs.dtype, size=time_steps, tensor_array_name="input_ta"
+    )
     input_ta = input_ta.unstack(inputs)
-    time = tf.constant(0, dtype='int32', name='time')
+    time = tf.constant(0, dtype="int32", name="time")
 
     def _step(time, output_ta_t, *states):
         """RNN step function.
@@ -127,13 +142,16 @@ def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
             Tuple: `(time + 1,output_ta_t) + tuple(new_states)`
         """
         current_input = input_ta.read(time)
-        random_cutoff_prob = tf.random_uniform(
-            (num_samples,), minval=0, maxval=1)
+        random_cutoff_prob = tf.random.uniform((num_samples,), minval=0, maxval=1)
 
-        output, new_states = step_function(current_input,
-                                           {'initial_states': states,
-                                            'random_cutoff_prob': random_cutoff_prob,
-                                            'rec_dp_mask': rec_dp_constants})
+        output, new_states = step_function(
+            current_input,
+            {
+                "initial_states": states,
+                "random_cutoff_prob": random_cutoff_prob,
+                "rec_dp_mask": rec_dp_constants,
+            },
+        )
         # returned output is ( raw/sampled, batch, output_dim)
         axes = [1, 0] + list(range(2, K.ndim(output)))
         output = tf.transpose(output, (axes))
@@ -147,7 +165,8 @@ def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
         body=_step,
         loop_vars=(time, output_ta) + states,
         parallel_iterations=1,
-        swap_memory=True)
+        swap_memory=True,
+    )
 
     last_time = final_outputs[0]
     output_ta = final_outputs[1]

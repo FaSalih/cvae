@@ -1,0 +1,59 @@
+# works also as the config file for tools
+# like ruff, i.e checks this file before running
+# as it'd check ruff.toml
+# same if run from pre-commit (i think.)
+# metadata
+[tool.poetry]
+authors = ["Santiago Miranda"]
+description = "New Chemical Variational Autoencoder."
+license = "Apache 2.0"
+name = "chemvae-2"
+readme = "README.md"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+keras = "3.3.3"
+numpy = "1.26.*"
+pandas = "^2.2.2"
+python = "^3.11.9" # install from conda, use --no-deps (still testing this!)
+pyyaml = "^6.0.1"
+rdkit = "^2023.9.6"
+tensorflow = {extras = ["and-cuda"], version = "^2.16.1"}
+
+pydot = "^2.0.0"
+[tool.poetry.group.dev.dependencies]
+pandas-stubs = "^2.2.2.240603"
+pre-commit = "^3.7.1"
+ruff = "^0.4.9"
+types-pyyaml = "^6.0.12.20240311"
+types-tensorflow = "^2.16.0.20240618"
+pyright = "^1.1.368"
+
+[tool.ruff]
+# remove excludes, use include is shorter.
+include = ["pyproject.toml", "chemvae/**/*.py"]
+exclude = ["**/*.ipynb"]
+
+indent-width = 4
+line-length = 88
+target-version = "py311"
+
+[lint]
+fixable = ["ALL"]
+ignore = []
+select = ["D", "I", "F", "E", "N", "W", "TID", "SIM", "ARG", "PTH", "ERA", "B"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[format]
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
