@@ -1,26 +1,44 @@
-# works also as the config file for tools
-# like ruff, i.e checks this file before running
-# as it'd check ruff.toml
-# same if run from pre-commit (i think.)
-# metadata
+# if lock file, poetry will install all those but with
+# exact versions from lock file
+# otherwise it updates them.
+# lock file has to be commited for exact reprod.
+
 [tool.poetry]
 authors = ["Santiago Miranda"]
 description = "New Chemical Variational Autoencoder."
 license = "Apache 2.0"
-name = "chemvae-2"
+name = "cvae"
 readme = "README.md"
 version = "0.1.0"
+packages = [{ include = "chemvae" }]
+package-mode = true
+
+
+[project.urls]
+changelog = "https://github.com/ghsanti/cvae/blob/master/CHANGELOG.md"
+documentation = "https://cvae.readthedocs.io"
+homepage = "https://cvae.readthedocs.io"
+issues = "https://github.com/ghsanti/cvae/issues"
+repository = "http://github.com/ghsanti/cvae.git"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+my-script = "chemvae.log_revision:start"
 
 [tool.poetry.dependencies]
 keras = "3.3.3"
 numpy = "1.26.*"
 pandas = "^2.2.2"
-python = "^3.11.9" # install from conda, use --no-deps (still testing this!)
+python = "~3.11.9" # install from conda, use --no-deps (still testing this!)
 pyyaml = "^6.0.1"
 rdkit = "^2023.9.6"
 tensorflow = {extras = ["and-cuda"], version = "^2.16.1"}
 
 pydot = "^2.0.0"
+matplotlib = "^3.9.0"
 [tool.poetry.group.dev.dependencies]
 pandas-stubs = "^2.2.2.240603"
 pre-commit = "^3.7.1"
@@ -29,6 +47,7 @@ types-pyyaml = "^6.0.12.20240311"
 types-tensorflow = "^2.16.0.20240618"
 pyright = "^1.1.368"
 
+sphinx = "^7.3.7"
 [tool.ruff]
 # remove excludes, use include is shorter.
 include = ["pyproject.toml", "chemvae/**/*.py"]
@@ -37,15 +56,32 @@ exclude = ["**/*.ipynb"]
 indent-width = 4
 line-length = 88
 target-version = "py311"
+show-fixes = true
 
 [lint]
 fixable = ["ALL"]
 ignore = []
-select = ["D", "I", "F", "E", "N", "W", "TID", "SIM", "ARG", "PTH", "ERA", "B"]
+# select = ["D", "I", "F", "E", "N", "W", "TID", "SIM", "ARG", "PTH", "ERA", "B"]
+select = ["ALL"]
 unfixable = []
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["chemvae"]
+forced-separate = ["tests"]
+relative-imports-order = "closest-to-furthest"
+section-order = [
+  "future",
+  "standard-library",
+  "third-party",
+  "first-party",
+  "tests",
+  "local-folder",
+]
+sections = { "tests" = ["tests"] }
 
 [format]
 docstring-code-format = true

@@ -77,8 +77,10 @@ def sampled_rnn(
     import tensorflow as tf
 
     tf.compat.v1.set_random_seed(random_seed)
-    import tensorflow.python.keras.backend as K
-    from tensorflow.python.ops import control_flow_ops, tensor_array_ops
+    import keras.api.backend as K
+
+    # where to import this from
+    from keras.api.ops import control_flow_ops, tensor_array_ops
 
     ndim = len(inputs.get_shape())
     if ndim < 3:

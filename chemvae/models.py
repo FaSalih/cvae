@@ -19,14 +19,14 @@ from keras.api.layers import (
 from keras.api.models import Model, load_model
 from keras.src.models import Functional
 
-from .hyperparameters import Config
+from .hyperparameters.user import UserConfig
 from .tgru_k2_gpu import TerminalGRU
 
 
 # =============================
 # Encoder functions
 # =============================
-def encoder_model(params: Config) -> Functional:
+def encoder_model(params: UserConfig) -> Functional:
     """Define hot-encoded smile to vector processing.
 
     params: program and network configuration.
@@ -97,7 +97,7 @@ def encoder_model(params: Config) -> Functional:
     return Model(x_in, [z_mean, z_log_var], name="encoder")
 
 
-def load_encoder(params: Config):
+def load_encoder(params: UserConfig):
     """Reload a saved encoder."""
     return cast(Functional, load_model(params.encoder_weights_file))
 
@@ -107,7 +107,7 @@ def load_encoder(params: Config):
 ##====================
 
 
-def sample_latent_vector(z_mean, z_log_var, kl_loss_var: Variable, params: Config):
+def sample_latent_vector(z_mean, z_log_var, kl_loss_var: Variable, params: UserConfig):
     """Create variational layers. Adds noise to z.
 
     z_mean: from encoder's Dense()(z).
@@ -132,7 +132,7 @@ class Sampling(Layer):
     """Uses (z_mean, z_log_var) to sample z, the vector encoding a smile."""
 
     def __init__(self, kl_loss_var: float, rand_seed: int, **kwargs):
-        """Configure Sampling.
+        """UserConfigure Sampling.
 
         kl_loss_var: a float that will tend to zero as epochs pass.
         It is recalculated on each epoch end.
@@ -162,7 +162,7 @@ class Sampling(Layer):
 # ===========================================
 
 
-def decoder_model(params: Config) -> Functional:
+def decoder_model(params: UserConfig) -> Functional:
     """Create decoder model. Retrieves a SMILES tensor from vector."""
 
     # sanity checks
@@ -233,7 +233,7 @@ def decoder_model(params: Config) -> Functional:
         return Model(z_in, x_out, name="decoder")
 
 
-def load_decoder(params: Config):
+def load_decoder(params: UserConfig):
     """Load decoder model weights file."""
     if params.do_tgru:
         custom_objects = {"TerminalGRU": TerminalGRU}
@@ -250,7 +250,7 @@ def load_decoder(params: Config):
 # ====================
 
 
-def property_predictor_model(params: Config) -> Functional:
+def property_predictor_model(params: UserConfig) -> Functional:
     """One or two independent property predictors.
 
     params: Program and Network configuration.

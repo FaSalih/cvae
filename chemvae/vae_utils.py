@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import yaml  # should probably be just json, not yaml.
 
-from . import hyperparameters
+from .hyperparameters.user import config
 from . import mol_utils as mu
 from .models import load_decoder, load_encoder, load_property_predictor
 
@@ -20,16 +20,10 @@ class VAEUtils(object):
 
     def __init__(
         self,
-        encoder_file=None,
-        decoder_file=None,
     ):
         """Set params."""
-        # files
-        self.params = hyperparameters.params
-        if encoder_file is not None:
-            self.params.encoder_weights_file = encoder_file
-        if decoder_file is not None:
-            self.params.decoder_weights_file = decoder_file
+
+        self.params = config
 
         # load unique chars
 
@@ -79,7 +73,7 @@ class VAEUtils(object):
         smiles = self.random_molecules(n=50000)
         batch = 2500
         # hidden dim is just the latent vector dimension, a hyperparameter.
-        Z = np.zeros((len(smiles), self.params.hidden_dim))  # (50000,len(z))
+        Z = np.zeros((len(smiles), self.params.latent_dim))  # (50000,len(z))
 
         # [[0-2500], [2500-5000],...] iterator.
         for chunk in self.chunks(list(range(len(smiles))), batch):
@@ -269,17 +263,17 @@ class VAEUtils(object):
             and (len(logit_prop_tasks) > 0)
         ):
             reg_pred, logit_pred = self.property_predictor.predict(z)
-            if isinstance(self.params.data_normalization_out, str):
+            if isinstance(self.params.data_normalization_out_file, str):
                 # un-normalise the predictions list
                 # mean and std for each column of original (filtered) data.
-                df_norm = pd.read_csv(self.params.data_normalization_out)
+                df_norm = pd.read_csv(self.params.data_normalization_out_file)
                 reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
             return reg_pred, logit_pred
         # regression only scenario
         elif isinstance(reg_prop_task, list) and (len(reg_prop_task) > 0):
             reg_pred = self.property_predictor.predict(z)
-            if isinstance(self.params.data_normalization_out, str):
-                df_norm = pd.read_csv(self.params.data_normalization_out)
+            if isinstance(self.params.data_normalization_out_file, str):
+                df_norm = pd.read_csv(self.params.data_normalization_out_file)
                 # to watch out this flag
                 reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
             return reg_pred
@@ -314,8 +308,8 @@ class VAEUtils(object):
             # regression only scenario
             elif isinstance(reg_prop_task, list) and (len(reg_prop_task) > 0):
                 reg_pred = self.property_predictor.predict(self.encode(X))
-                if isinstance(self.params.data_normalization_out, str):
-                    df_norm = pd.read_csv(self.params.data_normalization_out)
+                if isinstance(self.params.data_normalization_out_file, str):
+                    df_norm = pd.read_csv(self.params.data_normalization_out_file)
                     # same, to watch out reg_pred
                     reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
                 return reg_pred
@@ -353,7 +347,7 @@ class VAEUtils(object):
         # grab corresponding data
         data = [self.data.iloc[idx] for idx in idxs]
         # hidden dimensions for all input smiles
-        Z = np.zeros((len(smiles), self.params.hidden_dim))
+        Z = np.zeros((len(smiles), self.params.latent_dim))
 
         # this avoids having more than 1 cube in memory at a time.
         for chunk in self.chunks(list(range(len(smiles))), batch):

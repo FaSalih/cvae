@@ -1,14 +1,25 @@
-## ChemVae 2
+## ChemVae2
 
 The original chemvae updated to:
 
 * Use Keras 3.3.3
 * Comments and Types
 * New configuration set up
-* Refactor all code
-* Tests (still doing it.)
+* Refactor all code, including Models.
+* Tests
+* Integrated to devtools
+
+## What are the benefits?
+
+1. It runs
+2. Can potentially be converted to run in a browser
+3. Can be trained with different backends (Pytorch, Tensorflow, Jax.)
+4. It's easier to fix
+5. It's easier to install and there is a log of dependencies in `pyproject.toml` and version lock.
 
 ## Setup Instructions
+
+This may need adjustings if it fails. You can use conda as well.
 
 ```bash
 git clone <url_here>
@@ -16,12 +27,21 @@ mamba env create -n chemvae-2 python=3.11
 mamba init && source ~/.bashrc
 mamba activate chemvae-2
 mamba install poetry graphviz -c conda-forge
-mamba install nodejs -c conda-forge
+mamba install nodejs -c conda-forge # only for development
 poetry install
 ```
 
+## Attributions
 
-Original program and paper (Aspuru-Guzik Group): ![chemical VAE](https://github.com/aspuru-guzik-group/chemical_vae/)
+This is quite a modified fork of the original chemical VAE by [Aspuru-Guzik's Group](https://github.com/aspuru-guzik-group/chemical_vae/)
+
+
+## Next steps
+
+1. Train with more accuracy.
+2. Make it run in a web browser.
+3. Use it to suggest new molecules with specific properties.
+4. Improve the cells folder to allow users to run it fast.
 
 =============
 

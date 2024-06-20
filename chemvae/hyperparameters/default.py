@@ -1,4 +1,4 @@
-"""Recommended that this isn't modified, rather overwrite the user config."""
+"""Recommended that this isn't modified. It is overwritten by user cfg."""
 
 
 class DefaultConfig:

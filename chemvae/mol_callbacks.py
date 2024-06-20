@@ -8,7 +8,7 @@ from keras import Variable  # or from keras.api.backend
 from keras.api.callbacks import Callback, ModelCheckpoint
 from keras.src.models.functional import Functional  # just the type.
 
-from .hyperparameters import Config  # out set up configuration.
+from .hyperparameters.user import UserConfig  # out set up configuration.
 
 Schedule = Callable[[int], float]  # call back for the training.
 
@@ -28,7 +28,7 @@ class WeightAnnealerEpoch(Callback):
         param_kl_loss_weight: float,
         weight_name: str,
     ):
-        """Configuration.
+        """UserConfiguration.
 
         schedule: a function that takes an epoch index as input
         and returns a new weight for the VAE (float).
@@ -82,7 +82,7 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
         self,
         encoder_model: Functional,
         decoder_model: Functional,
-        params: Config,
+        parameters: UserConfig,
         prop_pred_model=None,
         prop_to_monitor="val_x_pred_categorical_accuracy",
         save_best_only=True,
@@ -93,7 +93,7 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
 
         encoder_model: the .Model encoder architecture
         decoder_model: the .Model decoder architecture
-        params: program, data, and network configuration.
+        parameters: program, data, and network configuration.
         prop_pred_model: the .Model prop_pred architecture
 
         Next 4 arguments are very much related (to saving checkpoints):
@@ -109,7 +109,7 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
         monitor_best_init: starting point for monitor
         (use -np.Inf for maximization tests, and np.Inf for minimization tests)
         """
-        self.p = params
+        self.p = parameters
 
         super().__init__("lie.keras")  # directory path; models within.
         self.save_best_only = save_best_only
@@ -145,20 +145,14 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
                 self.best = current
                 # now saving keras models + use value of "monitored property"
                 self.encoder.save(
-                    self.save_path.joinpath(
-                        "encoder_{}_{}.keras".format(epoch, current)
-                    )
+                    self.save_path.joinpath("encoder_{}.keras".format(epoch))
                 )
                 self.decoder.save(
-                    self.save_path.joinpath(
-                        "decoder_{}_{}.keras".format(epoch, current)
-                    )
+                    self.save_path.joinpath("decoder_{}.keras".format(epoch))
                 )
                 if self.prop_pred_model is not None:
                     self.prop_pred_model.save(
-                        self.save_path.joinpath(
-                            "prop_pred_{}_{}.keras".format(epoch, current)
-                        )
+                        self.save_path.joinpath("prop_pred_{}.keras".format(epoch))
                     )
             else:
                 if self.verbose > 0:
@@ -166,15 +160,11 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
         else:
             if self.verbose > 0:
                 print("Epoch %05d: saving model to " % (epoch))
-            self.encoder.save(
-                self.save_path.joinpath("encoder_{}_{}.keras".format(epoch, current))
-            )
-            self.decoder.save(
-                self.save_path.joinpath("decoder_{}_{}.keras".format(epoch, current))
-            )
+            self.encoder.save(self.save_path.joinpath("encoder_{}.keras".format(epoch)))
+            self.decoder.save(self.save_path.joinpath("decoder_{}.keras".format(epoch)))
             if self.prop_pred_model is not None:
                 self.prop_pred_model.save(
-                    self.save_path, "prop_pred_{}_{}.keras".format(epoch, current)
+                    self.save_path, "prop_pred_{}.keras".format(epoch)
                 )
 
 
@@ -189,12 +179,12 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
 
 #     This fn isn't actually used
 #     """
-#     def __init__(self, X_test, Y_test, params, df_norm: pd.DataFrame|None = None):
+#     def __init__(self, X_test, Y_test, parameters, df_norm: pd.DataFrame|None = None):
 #         super().__init__()
 #         self.df_norm = df_norm
 #         self.X_test = X_test
 #         self.Y_test = Y_test
-#         self.config = params
+#         self.config = parameters
 
 #     def on_epoch_end(self, epoch, logs=None):
 #         df_norm = self.df_norm

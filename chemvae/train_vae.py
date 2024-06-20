@@ -30,7 +30,7 @@ from typing_extensions import Literal
 # local modules
 from . import mol_callbacks as mol_cb
 from . import mol_utils as mu
-from .hyperparameters import Config, params
+from .hyperparameters.user import UserConfig, config
 from .models import (
     decoder_model,
     encoder_model,
@@ -80,18 +80,18 @@ class NameLayer(Layer):
 
 @overload
 def vectorize_data(
-    params: Config, do_prop_pred: Literal[True]
+    config: UserConfig, do_prop_pred: Literal[True]
 ) -> tuple[np.ndarray, np.ndarray, list, list]: ...
 
 
 @overload
 def vectorize_data(
-    params: Config, do_prop_pred: Literal[False]
+    config: UserConfig, do_prop_pred: Literal[False]
 ) -> tuple[np.ndarray, np.ndarray]: ...
 
 
 def vectorize_data(
-    params: Config, do_prop_pred: bool = True
+    config: UserConfig, do_prop_pred: bool = True
 ) -> tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, list, list]:
     """Split the dataframe to: smiles_tensor[, prediction data]
 
@@ -102,27 +102,27 @@ def vectorize_data(
     The smiles are hot-encoded to a 3-D tensor.
     It makes sure that it's multiple of batch size, and data is randomly selected.
     """
-    MAX_LEN = params.MAX_LEN
-    CHARS = params.CHARS
+    MAX_LEN = config.MAX_LEN
+    CHARS = config.CHARS
     NCHARS = len(CHARS)
     CHAR_INDICES = dict((c, i) for i, c in enumerate(CHARS))
 
     ## Load data for properties
-    if do_prop_pred and params.data_normalization_out_file:
-        normalize_out = params.data_normalization_out_file
+    if do_prop_pred and config.data_normalization_out_file:
+        normalize_out = config.data_normalization_out_file
     else:
         normalize_out = None
 
     ################ matches columns in csv file ###########
-    reg_props = params.reg_prop_tasks  # list of names
-    logit_props = params.logit_prop_tasks
+    reg_props = config.reg_prop_tasks  # list of names
+    logit_props = config.logit_prop_tasks
 
     if do_prop_pred and not reg_props and not logit_props:
         raise ValueError("please especify logit and/or reg tasks")
 
     # here we get the csv-data split, and optionally a "normed write out" for reg data.
     smiles, Y_reg, Y_logit = mu.load_smiles_and_data_df(
-        csv_file_path=params.data_file,  # smiles + data
+        csv_file_path=config.data_file,  # smiles + data
         max_len=MAX_LEN,
         reg_tasks=reg_props,
         logit_tasks=logit_props,
@@ -130,13 +130,13 @@ def vectorize_data(
     )
 
     # subset of data if needed.
-    if params.limit_data:
+    if config.limit_data:
         # sample indices within the range. The number collected is limit_data value.
         sample_idx = np.random.choice(
-            np.arange(len(smiles)), params.limit_data, replace=False
+            np.arange(len(smiles)), config.limit_data, replace=False
         )
-        smiles = list(np.array(smiles)[sample_idx])  # sublist of size params.limit_data
-        if params.do_prop_pred and params.data_file:
+        smiles = list(np.array(smiles)[sample_idx])  # sublist of size config.limit_data
+        if config.do_prop_pred and config.data_file:
             if Y_reg:
                 Y_reg = Y_reg[sample_idx]  # basically the rows of the original DF.
             if Y_logit:
@@ -145,35 +145,35 @@ def vectorize_data(
     print("Training set size is", len(smiles))
     print("total chars:", NCHARS)
 
-    X = mu.smiles_to_hot(smiles, MAX_LEN, params.PADDING, CHAR_INDICES, NCHARS)
+    X = mu.smiles_to_hot(smiles, MAX_LEN, config.PADDING, CHAR_INDICES, NCHARS)
     # if less than the batch size the `//` gives 0.
-    if X.shape[0] % params.batch_size != 0:
+    if X.shape[0] % config.batch_size != 0:
         # make it multiple of batch_size, discard excedent.
-        to_length = X.shape[0] // params.batch_size * params.batch_size
+        to_length = X.shape[0] // config.batch_size * config.batch_size
         X = X[:to_length]
-        if params.do_prop_pred:
+        if config.do_prop_pred:
             if Y_reg:
                 Y_reg = Y_reg[:to_length]
             if Y_logit:
                 Y_logit = Y_logit[:to_length]
 
-    np.random.seed(params.RAND_SEED)
+    np.random.seed(config.RAND_SEED)
     rand_idx = np.arange(X.shape[0])
     np.random.shuffle(rand_idx)  # shuffles the rows' indices.
 
-    TRAIN_FRAC = 1 - params.val_split
+    TRAIN_FRAC = 1 - config.val_split
     num_train = int(X.shape[0] * TRAIN_FRAC)
 
     # or gets 0
-    if num_train % params.batch_size != 0:
-        num_train = num_train // params.batch_size * params.batch_size
+    if num_train % config.batch_size != 0:
+        num_train = num_train // config.batch_size * config.batch_size
         print("num_train ", num_train)
 
     # makes the indices for each
     train_idx, test_idx = rand_idx[: int(num_train)], rand_idx[int(num_train) :]
 
-    if params.test_idx_file:
-        np.save(params.test_idx_file, test_idx)
+    if config.test_idx_file:
+        np.save(config.test_idx_file, test_idx)
 
     # grab the rows with an list of random indices.
     X_train, X_test = X[train_idx], X[test_idx]
@@ -200,30 +200,30 @@ def vectorize_data(
 
 @overload
 def load_models(
-    params: Config, do_prop_pred: Literal[True]
+    config: UserConfig, do_prop_pred: Literal[True]
 ) -> tuple[Functional, Functional, Functional, Functional, Functional, Variable]: ...
 
 
 @overload
 def load_models(
-    params: Config, do_prop_pred: Literal[False]
+    config: UserConfig, do_prop_pred: Literal[False]
 ) -> tuple[Functional, Functional, Functional, Variable]: ...
 
 
-def load_models(params: Config, do_prop_pred: bool = False):
+def load_models(config: UserConfig, do_prop_pred: bool = False):
     """Load and create each model.
 
-    params: configuration for networks and program.
+    config: configuration for networks and program.
     do_prop_pred: whether to use the property predictor and csv data file.
 
     """
-    kl_loss_var = Variable(params.kl_loss_weight)
-    if params.reload_model:
-        encoder = load_encoder(params)
-        decoder = load_decoder(params)
+    kl_loss_var = Variable(config.kl_loss_weight)
+    if config.reload_model:
+        encoder = load_encoder(config)
+        decoder = load_decoder(config)
     else:  # new models
-        encoder = encoder_model(params)
-        decoder = decoder_model(params)
+        encoder = encoder_model(config)
+        decoder = decoder_model(config)
 
     # note that this are all symbolic operations
     # lists are not unpacked for 1 variable, so use [0]
@@ -234,11 +234,11 @@ def load_models(params: Config, do_prop_pred: bool = False):
 
     # this is what makes it variational.
     z_samp, z_mean_z_log_var_output = sample_latent_vector(
-        z_mean, z_log_var, kl_loss_var, params
+        z_mean, z_log_var, kl_loss_var, config
     )
 
     # Decoder
-    if params.do_tgru:
+    if config.do_tgru:
         x_out = decoder([z_samp, x_in])
     else:
         x_out = decoder(z_samp)
@@ -248,9 +248,9 @@ def load_models(params: Config, do_prop_pred: bool = False):
 
     AE_only_model = Model(x_in, model_outputs, name="AE_ONLY")
 
-    if params.verbose_print:
+    if config.verbose_print:
         print("CONFIGURATION:")
-        print("\n".join("%s : %s" % item for item in vars(params).items()))
+        print("\n".join("%s : %s" % item for item in vars(config).items()))
         time.sleep(5)
 
         encoder.summary()
@@ -274,16 +274,16 @@ def load_models(params: Config, do_prop_pred: bool = False):
 
     # extends the output
     if do_prop_pred:
-        if params.reload_model:
-            property_predictor = load_property_predictor(params)
+        if config.reload_model:
+            property_predictor = load_property_predictor(config)
         else:
-            property_predictor = property_predictor_model(params)
+            property_predictor = property_predictor_model(config)
 
         if (
-            isinstance(params.reg_prop_tasks, list)
-            and (len(params.reg_prop_tasks) > 0)
-            and isinstance(params.logit_prop_tasks, list)
-            and (len(params.logit_prop_tasks) > 0)
+            isinstance(config.reg_prop_tasks, list)
+            and (len(config.reg_prop_tasks) > 0)
+            and isinstance(config.logit_prop_tasks, list)
+            and (len(config.logit_prop_tasks) > 0)
         ):
             reg_prop_pred, logit_prop_pred = property_predictor(z_mean)
             reg_prop_pred = NameLayer(name="reg_prop_pred")(reg_prop_pred)
@@ -291,8 +291,8 @@ def load_models(params: Config, do_prop_pred: bool = False):
             model_outputs.extend([reg_prop_pred, logit_prop_pred])
 
         # regression only scenario
-        elif isinstance(params.reg_prop_tasks, list) and (
-            len(params.reg_prop_tasks) > 0
+        elif isinstance(config.reg_prop_tasks, list) and (
+            len(config.reg_prop_tasks) > 0
         ):
             reg_prop_pred = property_predictor(z_mean)
             reg_prop_pred = NameLayer(name="reg_prop_pred")(reg_prop_pred)
@@ -300,8 +300,8 @@ def load_models(params: Config, do_prop_pred: bool = False):
 
         # logit only scenario
         elif (
-            isinstance(params.logit_prop_tasks, list)
-            and len(params.logit_prop_tasks) > 0
+            isinstance(config.logit_prop_tasks, list)
+            and len(config.logit_prop_tasks) > 0
         ):
             logit_prop_pred = property_predictor(z_mean)
             logit_prop_pred = NameLayer(name="logit_prop_pred")(logit_prop_pred)
@@ -338,58 +338,58 @@ def kl_loss(truth_dummy, x_mean_log_var_output):
     return kl_loss
 
 
-def main_no_prop(params: Config):
+def main_no_prop(config: UserConfig):
     start_time = time.time()
-    if params.do_prop_pred:
+    if config.do_prop_pred:
         raise Exception(
-            'expected do_prop_pred to be "false". Found {}'.format(params.do_prop_pred)
+            'expected do_prop_pred to be "false". Found {}'.format(config.do_prop_pred)
         )
-    X_train, X_test = vectorize_data(params, params.do_prop_pred)
+    X_train, X_test = vectorize_data(config, config.do_prop_pred)
     # loads kl_loss_var from param.kl_loss_weight
     AE_only_model, encoder, decoder, kl_loss_var = load_models(
-        params, params.do_prop_pred
+        config, config.do_prop_pred
     )
 
     # compile models
-    if params.optim == "adam":
-        optim = Adam(learning_rate=params.lr, beta_1=params.momentum)
-    elif params.optim == "rmsprop":
-        optim = RMSprop(leargning_rate=params.lr, rho=params.momentum)
-    elif params.optim == "sgd":
-        optim = SGD(learning_rate=params.lr, momentum=params.momentum)
+    if config.optim == "adam":
+        optim = Adam(learning_rate=config.lr, beta_1=config.momentum)
+    elif config.optim == "rmsprop":
+        optim = RMSprop(leargning_rate=config.lr, rho=config.momentum)
+    elif config.optim == "sgd":
+        optim = SGD(learning_rate=config.lr, momentum=config.momentum)
     else:
         raise NotImplementedError("Please define valid optimizer")
 
-    model_losses = {"x_pred": params.loss, "z_mean_z_log_var": kl_loss}
+    model_losses = {"x_pred": config.loss, "z_mean_z_log_var": kl_loss}
 
     # vae metrics, callbacks
     vae_sig_schedule = partial(
         mol_cb.sigmoid_schedule,
-        slope=params.anneal_sigmod_slope,
-        start=params.vae_annealer_start,
+        slope=config.anneal_sigmod_slope,
+        start=config.vae_annealer_start,
     )
     # remains the epoch, that is used by the annealer.
     vae_anneal_callback = mol_cb.WeightAnnealerEpoch(
-        vae_sig_schedule, kl_loss_var, params.kl_loss_weight, "vae"
+        vae_sig_schedule, kl_loss_var, config.kl_loss_weight, "vae"
     )
 
-    csv_clb = CSVLogger(params.history_file, append=False)
+    csv_clb = CSVLogger(config.history_file, append=False)
     callbacks = [vae_anneal_callback, csv_clb]
 
-    xent_loss_weight = Variable(params.xent_loss_weight, dtype=float)
+    xent_loss_weight = Variable(config.xent_loss_weight, dtype=float)
     model_train_targets = {
         "x_pred": X_train,
-        "z_mean_z_log_var": np.ones((X_train.shape[0], params.latent_dim * 2)),
+        "z_mean_z_log_var": np.ones((X_train.shape[0], config.latent_dim * 2)),
     }
     model_test_targets = {
         "x_pred": X_test,
-        "z_mean_z_log_var": np.ones((X_test.shape[0], params.latent_dim * 2)),
+        "z_mean_z_log_var": np.ones((X_test.shape[0], config.latent_dim * 2)),
     }
 
     def vae_anneal_metric(y_true, y_pred):
         return kl_loss_var
 
-    keras_verbose = params.verbose_print
+    keras_verbose = config.verbose_print
 
     AE_only_model.compile(
         loss=model_losses,
@@ -400,12 +400,12 @@ def main_no_prop(params: Config):
         optimizer=cast(str, optim),
         metrics={"x_pred": ["categorical_accuracy", vae_anneal_metric]},
     )
-    if params.checkpoint_path:
+    if config.checkpoint_path:
         callbacks.append(
             mol_cb.EncoderDecoderCheckpoint(
                 encoder,
                 decoder,
-                params=params,
+                parameters=config,
                 prop_pred_model=None,
                 save_best_only=True,
             )
@@ -413,9 +413,9 @@ def main_no_prop(params: Config):
     AE_only_model.fit(
         x=X_train,
         y=model_train_targets,
-        batch_size=params.batch_size,
-        epochs=params.epochs,
-        initial_epoch=params.prev_epochs,
+        batch_size=config.batch_size,
+        epochs=config.epochs,
+        initial_epoch=config.prev_epochs,
         callbacks=callbacks,
         verbose=str(keras_verbose),
         validation_data=[X_test, model_test_targets],
@@ -426,14 +426,14 @@ def main_no_prop(params: Config):
     return
 
 
-def main_property_run(params: Config):
+def main_property_run(parameters: UserConfig):
     start_time = time.time()
 
-    if not params.do_prop_pred:
-        raise Exception("expected params.do_prop_pred to be true")
+    if not parameters.do_prop_pred:
+        raise Exception("expected parameters.do_prop_pred to be true")
 
     # load data
-    X_train, X_test, Y_train, Y_test = vectorize_data(params, do_prop_pred=True)
+    X_train, X_test, Y_train, Y_test = vectorize_data(parameters, do_prop_pred=True)
 
     # load full models:
     (
@@ -443,63 +443,63 @@ def main_property_run(params: Config):
         decoder,
         property_predictor,
         kl_loss_var,
-    ) = load_models(params, do_prop_pred=True)
+    ) = load_models(parameters, do_prop_pred=True)
 
     # compile models
-    if params.optim == "adam":
-        optim = Adam(learning_rate=params.lr, beta_1=params.momentum)
-    elif params.optim == "rmsprop":
-        optim = RMSprop(learning_rate=params.lr, rho=params.momentum)
-    elif params.optim == "sgd":
-        optim = SGD(learning_rate=params.lr, momentum=params.momentum)
+    if parameters.optim == "adam":
+        optim = Adam(learning_rate=parameters.lr, beta_1=parameters.momentum)
+    elif parameters.optim == "rmsprop":
+        optim = RMSprop(learning_rate=parameters.lr, rho=parameters.momentum)
+    elif parameters.optim == "sgd":
+        optim = SGD(learning_rate=parameters.lr, momentum=parameters.momentum)
     else:
         raise NotImplementedError("Please define valid optimizer")
 
     model_train_targets = {
         "x_pred": X_train,
-        "z_mean_z_log_var": np.ones((np.shape(X_train)[0], params.latent_dim * 2)),
+        "z_mean_z_log_var": np.ones((np.shape(X_train)[0], parameters.latent_dim * 2)),
     }
     model_test_targets = {
         "x_pred": X_test,
-        "z_mean_z_log_var": np.ones((np.shape(X_test)[0], params.latent_dim * 2)),
+        "z_mean_z_log_var": np.ones((np.shape(X_test)[0], parameters.latent_dim * 2)),
     }
-    model_losses = {"x_pred": params.loss, "z_mean_z_log_var": kl_loss}
+    model_losses = {"x_pred": parameters.loss, "z_mean_z_log_var": kl_loss}
 
-    xent_loss_weight = Variable(params.xent_loss_weight)
-    ae_loss_weight = 1.0 - params.prop_pred_loss_weight
+    xent_loss_weight = Variable(parameters.xent_loss_weight)
+    ae_loss_weight = 1.0 - parameters.prop_pred_loss_weight
     model_loss_weights = {
         "x_pred": ae_loss_weight * xent_loss_weight,
         "z_mean_z_log_var": ae_loss_weight * kl_loss_var,
     }
 
-    prop_pred_loss_weight = params.prop_pred_loss_weight
+    prop_pred_loss_weight = parameters.prop_pred_loss_weight
 
-    if params.reg_prop_tasks and (len(params.reg_prop_tasks) > 0):
+    if parameters.reg_prop_tasks and (len(parameters.reg_prop_tasks) > 0):
         model_train_targets["reg_prop_pred"] = Y_train[0]
         model_test_targets["reg_prop_pred"] = Y_test[0]
-        model_losses["reg_prop_pred"] = params.reg_prop_pred_loss
+        model_losses["reg_prop_pred"] = parameters.reg_prop_pred_loss
         model_loss_weights["reg_prop_pred"] = prop_pred_loss_weight
-    if params.logit_prop_tasks and (len(params.logit_prop_tasks) > 0):
-        if params.reg_prop_tasks and (len(params.reg_prop_tasks) > 0):
+    if parameters.logit_prop_tasks and (len(parameters.logit_prop_tasks) > 0):
+        if parameters.reg_prop_tasks and (len(parameters.reg_prop_tasks) > 0):
             model_train_targets["logit_prop_pred"] = Y_train[1]
             model_test_targets["logit_prop_pred"] = Y_test[1]
         else:
             model_train_targets["logit_prop_pred"] = Y_train[0]
             model_test_targets["logit_prop_pred"] = Y_test[0]
-        model_losses["logit_prop_pred"] = params.logit_prop_pred_loss
+        model_losses["logit_prop_pred"] = parameters.logit_prop_pred_loss
         model_loss_weights["logit_prop_pred"] = prop_pred_loss_weight
 
     # vae metrics, callbacks
     vae_sig_schedule = partial(
         mol_cb.sigmoid_schedule,
-        slope=params.anneal_sigmod_slope,
-        start=params.vae_annealer_start,
+        slope=parameters.anneal_sigmod_slope,
+        start=parameters.vae_annealer_start,
     )
     vae_anneal_callback = mol_cb.WeightAnnealerEpoch(
-        vae_sig_schedule, kl_loss_var, params.kl_loss_weight, "vae"
+        vae_sig_schedule, kl_loss_var, parameters.kl_loss_weight, "vae"
     )
 
-    csv_clb = CSVLogger(params.history_file, append=False)
+    csv_clb = CSVLogger(parameters.history_file, append=False)
 
     callbacks = [vae_anneal_callback, csv_clb]
 
@@ -507,14 +507,14 @@ def main_property_run(params: Config):
         return kl_loss_var
 
     # control verbose output
-    keras_verbose = params.verbose_print
+    keras_verbose = parameters.verbose_print
 
-    if params.checkpoint_path:
+    if parameters.checkpoint_path:
         callbacks.append(
             mol_cb.EncoderDecoderCheckpoint(
                 encoder,
                 decoder,
-                params=params,
+                parameters=config,
                 prop_pred_model=property_predictor,
                 save_best_only=False,
             )
@@ -530,44 +530,19 @@ def main_property_run(params: Config):
     AE_PP_model.fit(
         X_train,
         model_train_targets,
-        batch_size=params.batch_size,
-        epochs=params.epochs,
-        initial_epoch=params.prev_epochs,
+        batch_size=parameters.batch_size,
+        epochs=parameters.epochs,
+        initial_epoch=parameters.prev_epochs,
         callbacks=callbacks,
         verbose=str(keras_verbose),
         validation_data=[X_test, model_test_targets],
     )
 
-    encoder.save(params.encoder_weights_file)
-    decoder.save(params.decoder_weights_file)
-    property_predictor.save(params.prop_pred_weights_file)
+    encoder.save(parameters.encoder_weights_file)
+    decoder.save(parameters.decoder_weights_file)
+    property_predictor.save(parameters.prop_pred_weights_file)
 
     print("time of run : ", time.time() - start_time)
     print("**FINISHED**")
 
     return
-
-
-# __name__ is set when executed from cli.
-if __name__ == "__main__":
-    # print("All params:", params)
-
-    if params.do_prop_pred:
-        main_property_run(params)
-    else:
-        print("no property pred.")
-        main_no_prop(params)
-
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('-e', '--exp_file',
-    #                     help='experiment file', default='exp.json')
-    # parser.add_argument('-d', '--directory',
-    #                     help='exp directory', default=None)
-    # args = vars(parser.parse_args())
-    # if args['directory'] is not None:
-
-    # curdir = os.getcwd()
-    # os.chdir(args['directory'])
-    # args['exp_file'] = os.path.join(args['directory'], args['exp_file'])
-
-    # os.chdir(curdir)

@@ -8,7 +8,7 @@
 # input output variables
 JOBDIR="/tmp/${PBS_JOBID}"      # PBS_JOBID is created at start, folder for our run.
 OUTFILE="${JOBDIR}/outfile.txt" #Put prints here.
-MYDIR="/export/home4/sm543h/projects/chemical_vae_2"
+MYDIR="/export/home4/sm543h/projects/chemvae-2"
 
 cd ${MYDIR} #project
 
@@ -23,5 +23,5 @@ printf "Prefix is %s\n" ${CONDA_PREFIX} >>${OUTFILE}
 pwd >> ${OUTFILE}
 python --version >> ${OUTFILE}
 
-python -m chemvae.train_vae
+python -m scripts.train_vae
 cp -r ${JOBDIR} ${MYDIR}
