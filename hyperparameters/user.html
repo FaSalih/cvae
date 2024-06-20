@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>chemvae API documentation</title>
-<meta name="description" content="" />
+<title>chemvae.hyperparameters.user API documentation</title>
+<meta name="description" content="User configuration." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,32 +19,166 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>chemvae</code></h1>
+<h1 class="title">Module <code>chemvae.hyperparameters.user</code></h1>
 </header>
 <section id="section-intro">
+<p>User configuration.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;User configuration.&#34;&#34;&#34;
+
+from .default import DefaultConfig
+
+from pathlib import Path
+import os
+import yaml
+
+env = os.getenv(&#34;CVAE_DATA&#34;)
+dir_path = Path(env) if env else Path(__file__).parent
+
+# SET THIS DIR OR ENV VAR ABOVE
+DATA_DIR = dir_path / &#34;..&#34; / &#34;..&#34; / &#34;models&#34; / &#34;zinc&#34;
+
+
+class UserConfig(DefaultConfig):
+    &#34;&#34;&#34;Set your configuration here.&#34;&#34;&#34;
+
+    def __init__(self, data_dir: Path):
+        &#34;&#34;&#34;Define the parameters.
+
+        Ideally leave these below as default, change only below &#34;USER&#34;.
+        &#34;&#34;&#34;
+        super().__init__()
+
+        # GENERAL
+        self.MAX_LEN = 120
+        self.do_prop_pred = False
+        self.TRAIN_MODEL = True
+        self.ENC_DEC_TEST = False
+        self.PADDING = &#34;right&#34;
+        self.RAND_SEED = 42
+        self.epochs = 70
+        self.batch_size = 126
+        self.lr = 0.00039192162392520126
+        self.momentum = 0.97170900638688007
+        self.latent_dim = 196
+
+        # FILES
+        self.checkpoint_path = &#34;./&#34;
+        self.data_normalization_out_file: str | None = None
+        self.data_file = &#34;250k_rndm_zinc_drugs_clean_3.csv&#34;
+        self.char_file = &#34;zinc.json&#34;
+        self.encoder_weights_file = &#34;encoder_9.keras&#34;
+        self.decoder_weights_file = &#34;decoder_9.keras&#34;
+        self.prop_pred_weights_file = &#34;zinc_prop_pred.keras&#34;
+        self.test_idx_file = &#34;test_idx.npy&#34;
+        self.history_file = &#34;history.csv&#34;
+
+        self.vae_annealer_start = 29  # where does this come from?
+        self.dropout_rate_mid = 0.082832929704794792
+        self.anneal_sigmod_slope = 0.51066543057913916
+        self.recurrent_dim = 488
+        self.tgru_dropout = 0.19617749608323892
+        self.hg_growth_factor = 1.2281884874932403
+        self.middle_layer = 3
+
+        # updates paths.
+        for k, v in list(vars(self).items()):
+            if k.endswith(&#34;file&#34;) and isinstance(v, str):
+                setattr(self, k, data_dir.joinpath(v).resolve())
+            elif k.endswith(&#34;path&#34;):
+                setattr(self, k, data_dir.joinpath(v).resolve())
+        # load chars and set them
+
+        self.CHARS = yaml.safe_load(open(self.char_file))
+        self.NCHARS = len(self.CHARS)
+
+
+config = UserConfig(DATA_DIR)</code></pre>
+</details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt><code class="name"><a title="chemvae.hyperparameters" href="hyperparameters/index.html">chemvae.hyperparameters</a></code></dt>
+<dt id="chemvae.hyperparameters.user.UserConfig"><code class="flex name class">
+<span>class <span class="ident">UserConfig</span></span>
+<span>(</span><span>data_dir: pathlib.Path)</span>
+</code></dt>
 <dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="chemvae.sampled_rnn_tf" href="sampled_rnn_tf.html">chemvae.sampled_rnn_tf</a></code></dt>
-<dd>
-<div class="desc"><p>sampled_rnn - based on rnn method in tensorflow_backend.py in keras …</p></div>
-</dd>
-<dt><code class="name"><a title="chemvae.tests" href="tests/index.html">chemvae.tests</a></code></dt>
-<dd>
-<div class="desc"></div>
+<div class="desc"><p>Set your configuration here.</p>
+<p>Define the parameters.</p>
+<p>Ideally leave these below as default, change only below "USER".</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UserConfig(DefaultConfig):
+    &#34;&#34;&#34;Set your configuration here.&#34;&#34;&#34;
+
+    def __init__(self, data_dir: Path):
+        &#34;&#34;&#34;Define the parameters.
+
+        Ideally leave these below as default, change only below &#34;USER&#34;.
+        &#34;&#34;&#34;
+        super().__init__()
+
+        # GENERAL
+        self.MAX_LEN = 120
+        self.do_prop_pred = False
+        self.TRAIN_MODEL = True
+        self.ENC_DEC_TEST = False
+        self.PADDING = &#34;right&#34;
+        self.RAND_SEED = 42
+        self.epochs = 70
+        self.batch_size = 126
+        self.lr = 0.00039192162392520126
+        self.momentum = 0.97170900638688007
+        self.latent_dim = 196
+
+        # FILES
+        self.checkpoint_path = &#34;./&#34;
+        self.data_normalization_out_file: str | None = None
+        self.data_file = &#34;250k_rndm_zinc_drugs_clean_3.csv&#34;
+        self.char_file = &#34;zinc.json&#34;
+        self.encoder_weights_file = &#34;encoder_9.keras&#34;
+        self.decoder_weights_file = &#34;decoder_9.keras&#34;
+        self.prop_pred_weights_file = &#34;zinc_prop_pred.keras&#34;
+        self.test_idx_file = &#34;test_idx.npy&#34;
+        self.history_file = &#34;history.csv&#34;
+
+        self.vae_annealer_start = 29  # where does this come from?
+        self.dropout_rate_mid = 0.082832929704794792
+        self.anneal_sigmod_slope = 0.51066543057913916
+        self.recurrent_dim = 488
+        self.tgru_dropout = 0.19617749608323892
+        self.hg_growth_factor = 1.2281884874932403
+        self.middle_layer = 3
+
+        # updates paths.
+        for k, v in list(vars(self).items()):
+            if k.endswith(&#34;file&#34;) and isinstance(v, str):
+                setattr(self, k, data_dir.joinpath(v).resolve())
+            elif k.endswith(&#34;path&#34;):
+                setattr(self, k, data_dir.joinpath(v).resolve())
+        # load chars and set them
+
+        self.CHARS = yaml.safe_load(open(self.char_file))
+        self.NCHARS = len(self.CHARS)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="chemvae.hyperparameters.default.DefaultConfig" href="default.html#chemvae.hyperparameters.default.DefaultConfig">DefaultConfig</a></li>
+</ul>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
 </section>
 </article>
 <nav id="sidebar">
@@ -53,11 +187,16 @@
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="chemvae.hyperparameters" href="hyperparameters/index.html">chemvae.hyperparameters</a></code></li>
-<li><code><a title="chemvae.sampled_rnn_tf" href="sampled_rnn_tf.html">chemvae.sampled_rnn_tf</a></code></li>
-<li><code><a title="chemvae.tests" href="tests/index.html">chemvae.tests</a></code></li>
+<li><code><a title="chemvae.hyperparameters" href="index.html">chemvae.hyperparameters</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="chemvae.hyperparameters.user.UserConfig" href="#chemvae.hyperparameters.user.UserConfig">UserConfig</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>
