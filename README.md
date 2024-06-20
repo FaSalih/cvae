@@ -1,6 +1,8 @@
-## ChemVae2
+# cvae
 
-The original chemvae updated to:
+Chemical Variational Autoencoder.
+
+Updates:
 
 * Use Keras 3.3.3
 * Comments and Types
@@ -9,21 +11,17 @@ The original chemvae updated to:
 * Tests
 * Integrated to devtools
 
-## What are the benefits?
+## New
+* It can potentially be converted to run in a browser.
+* It can be trained with different backends (Pytorch, Tensorflow, Jax.)
+* It's easier to fix
+* It's easier to install and there is a log of dependencies in `pyproject.toml` and version lock.
 
-1. It runs
-2. Can potentially be converted to run in a browser
-3. Can be trained with different backends (Pytorch, Tensorflow, Jax.)
-4. It's easier to fix
-5. It's easier to install and there is a log of dependencies in `pyproject.toml` and version lock.
-
-## Setup Instructions
-
-This may need adjustings if it fails. You can use conda as well.
+## Install
 
 ```bash
 git clone <url_here>
-mamba env create -n chemvae-2 python=3.11
+mamba env create -n chemvae-2 python>=3.11
 mamba init && source ~/.bashrc
 mamba activate chemvae-2
 mamba install poetry graphviz -c conda-forge
@@ -31,17 +29,19 @@ mamba install nodejs -c conda-forge # only for development
 poetry install
 ```
 
+If you are using CPU only, it may be enough to have python3.11 and install with poetry.
+
 ## Attributions
 
 This is quite a modified fork of the original chemical VAE by [Aspuru-Guzik's Group](https://github.com/aspuru-guzik-group/chemical_vae/)
 
 
-## Next steps
+## Upcoming
 
-1. Train with more accuracy.
+1. Train with more accuracy (and upload best weights.)
 2. Make it run in a web browser.
 3. Use it to suggest new molecules with specific properties.
-4. Improve the cells folder to allow users to run it fast.
+4. Make notebooks run again.
 
 =============
 
