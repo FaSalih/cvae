@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
 <title>chemvae.sampled_rnn_tf API documentation</title>
-<meta name="description" content="sampled_rnn - based on rnn method in tensorflow_backend.py in keras …" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<meta name="description" content="sampled_rnn - based on rnn method in tensorflow_backend.py in keras …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
 </head>
 <body>
 <main>
@@ -24,197 +27,6 @@
 <section id="section-intro">
 <p>sampled_rnn - based on rnn method in tensorflow_backend.py in keras</p>
 <p>Main difference is in how to handle dimensions of states.</p>
-<h1 id="think-carefully-about-the-distribution-of-the-random-sampled-variables">think carefully about the distribution of the random sampled variables&hellip;</h1>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#34;&#34;&#34;sampled_rnn - based on rnn method in tensorflow_backend.py in keras
-
-Main difference is in how to handle dimensions of states.
-
-
-# think carefully about the distribution of the random sampled variables...
-
-&#34;&#34;&#34;
-
-
-def sampled_rnn(
-    step_function,
-    inputs,
-    initial_states,
-    units,
-    random_seed,
-    go_backwards=False,
-    mask=None,
-    rec_dp_constants=None,
-    unroll=False,
-    input_length=None,
-):
-    &#34;&#34;&#34;Iterates over the time dimension of a tensor.
-    # Arguments
-        step_function: RNN step function.
-
-    Parameters
-    ----------
-                input: tensor with shape `(samples, ...)` (no time dimension),
-                    representing input for the batch of samples at a certain
-                    time step.
-                states: list of tensors.
-
-    Returns
-    -------
-                output: tensor with shape `(samples, output_dim)`
-                    (no time dimension).
-                new_states: list of tensors, same length and shapes
-                    as &#39;states&#39;. The first state in the list must be the
-                    output tensor at the previous timestep.
-        inputs: tensor of temporal data of shape `(samples, time, ...)`
-            (at least 3D).
-        initial_states: tensor with shape (samples, output_dim)
-            (no time dimension),
-            containing the initial values for the states used in
-            the step function.
-        units : number of units in the output dimension.
-        go_backwards: boolean. If True, do the iteration over
-            the time dimension in reverse order.
-        mask: binary tensor with shape `(samples, time, 1)`,
-            with a zero for every element that is masked.
-        constants: a list of constant values passed at each step.
-        unroll: whether to unroll the RNN or to use a symbolic loop (`while_loop` or `scan` depending on backend).
-        input_length: not relevant in the TensorFlow implementation.
-            Must be specified if using unrolling with Theano.
-
-    # Returns
-        A tuple, `(last_output, outputs, new_states)`.
-
-            last_output: the latest output of the rnn, of shape `(samples, ...)`
-            outputs: tensor with shape `(samples, time, ...)` where each
-                etry `outputs[s, t]` is the output of the step function
-                at time `t` for sample `s`.
-            new_states: list of tensors, latest states returned by
-                the step function, of shape `(samples, ...)`.
-
-    # Raises
-        ValueError: if input dimension is less than 3.
-        ValueError: if `unroll` is `True` but input timestep is not a fixed number.
-        ValueError: if `mask` is provided (not `None`) but states is not provided
-            (`len(states)` == 0).
-
-    &#34;&#34;&#34;
-    import numpy as np
-
-    np.random.seed(random_seed)
-    import tensorflow as tf
-
-    tf.compat.v1.set_random_seed(random_seed)
-    import keras.api.backend as K
-
-    # where to import this from
-    from keras.api.ops import control_flow_ops, tensor_array_ops
-
-    ndim = len(inputs.get_shape())
-    if ndim &lt; 3:
-        raise ValueError(&#34;Input should be at least 3D.&#34;)
-
-    if unroll:
-        raise ValueError(&#34;Unrolling not implemented in sampled_rnn&#34;)
-    if mask is not None:
-        raise ValueError(&#34;Masking not implemented in sampled_rnn&#34;)
-
-    # this switches dims to (time, samples, ...)
-    axes = [1, 0] + list(range(2, ndim))
-    inputs = tf.transpose(inputs, (axes))
-
-    if go_backwards:
-        inputs = np.flip(inputs, 0)
-
-    states = tuple(initial_states)
-
-    # inputs shape: (time, samples, output_dims -- may be 3xoutput
-    # because of cpu implementation)
-    time_steps = tf.shape(inputs)[0]
-
-    # Calculate one time step first
-    # Generate a random cutoff probability for comparing to the cdf probility
-    #   Generates one for each sample in the batch
-
-    num_samples = tf.shape(inputs)[1]
-    # commenting bc it was unused.
-    # output_dim = int(initial_states[0].get_shape()[-1])
-    random_cutoff_prob = tf.random.uniform((num_samples,), minval=0.0, maxval=1.0)
-
-    # Ignore constants for the first run
-    outputs, _ = step_function(
-        inputs[0],
-        {
-            &#34;initial_states&#34;: initial_states,
-            &#34;random_cutoff_prob&#34;: random_cutoff_prob,
-            &#34;rec_dp_mask&#34;: rec_dp_constants,
-        },
-    )
-
-    output_ta = tensor_array_ops.TensorArray(
-        dtype=outputs.dtype, size=time_steps, tensor_array_name=&#34;output_ta&#34;
-    )
-    input_ta = tensor_array_ops.TensorArray(
-        dtype=inputs.dtype, size=time_steps, tensor_array_name=&#34;input_ta&#34;
-    )
-    input_ta = input_ta.unstack(inputs)
-    time = tf.constant(0, dtype=&#34;int32&#34;, name=&#34;time&#34;)
-
-    def _step(time, output_ta_t, *states):
-        &#34;&#34;&#34;RNN step function.
-
-        # Arguments
-            time: Current timestep value.
-            output_ta_t: TensorArray.
-            *states: List of states.
-
-        # Returns
-            Tuple: `(time + 1,output_ta_t) + tuple(new_states)`
-        &#34;&#34;&#34;
-        current_input = input_ta.read(time)
-        random_cutoff_prob = tf.random.uniform((num_samples,), minval=0, maxval=1)
-
-        output, new_states = step_function(
-            current_input,
-            {
-                &#34;initial_states&#34;: states,
-                &#34;random_cutoff_prob&#34;: random_cutoff_prob,
-                &#34;rec_dp_mask&#34;: rec_dp_constants,
-            },
-        )
-        # returned output is ( raw/sampled, batch, output_dim)
-        axes = [1, 0] + list(range(2, K.ndim(output)))
-        output = tf.transpose(output, (axes))
-        for state, new_state in zip(states, new_states):
-            new_state.set_shape(state.get_shape())
-        output_ta_t = output_ta_t.write(time, output)
-        return (time + 1, output_ta_t) + tuple(new_states)
-
-    final_outputs = control_flow_ops.while_loop(
-        cond=lambda time, *_: time &lt; time_steps,
-        body=_step,
-        loop_vars=(time, output_ta) + states,
-        parallel_iterations=1,
-        swap_memory=True,
-    )
-
-    last_time = final_outputs[0]
-    output_ta = final_outputs[1]
-    new_states = final_outputs[2:]
-
-    # this is in order to get the second output in states (i.e. the sampled
-    # output)
-    outputs = output_ta.stack()[:, :, 1, :]
-    last_output = output_ta.read(last_time - 1)[:, 1, :]
-
-    # outputs is switched back to (samples, timesteps, output_dims)
-    axes = [1, 0] + list(range(2, len(outputs.get_shape())))
-    outputs = tf.transpose(outputs, axes)
-    return last_output, outputs, new_states</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -224,44 +36,29 @@ def sampled_rnn(
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="chemvae.sampled_rnn_tf.sampled_rnn"><code class="name flex">
-<span>def <span class="ident">sampled_rnn</span></span>(<span>step_function, inputs, initial_states, units, random_seed, go_backwards=False, mask=None, rec_dp_constants=None, unroll=False, input_length=None)</span>
+<span>def <span class="ident">sampled_rnn</span></span>(<span>step_function, inputs, initial_states, random_seed, go_backwards=False, mask=None, rec_dp_constants=None, unroll=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Iterates over the time dimension of a tensor.</p>
-<h1 id="arguments">Arguments</h1>
-<pre><code>step_function: RNN step function.
-</code></pre>
 <h2 id="parameters">Parameters</h2>
-<pre><code>        input: tensor with shape &lt;code&gt;(samples, ...)&lt;/code&gt; (no time dimension),
-            representing input for the batch of samples at a certain
-            time step.
-        states: list of tensors.
-</code></pre>
-<h2 id="returns">Returns</h2>
-<pre><code>        output: tensor with shape &lt;code&gt;(samples, output\_dim)&lt;/code&gt;
-            (no time dimension).
-        new_states: list of tensors, same length and shapes
-            as 'states'. The first state in the list must be the
-            output tensor at the previous timestep.
+<pre><code>step_function: RNN step function.
 inputs: tensor of temporal data of shape &lt;code&gt;(samples, time, ...)&lt;/code&gt;
     (at least 3D).
 initial_states: tensor with shape (samples, output_dim)
     (no time dimension),
     containing the initial values for the states used in
     the step function.
-units : number of units in the output dimension.
 go_backwards: boolean. If True, do the iteration over
     the time dimension in reverse order.
 mask: binary tensor with shape &lt;code&gt;(samples, time, 1)&lt;/code&gt;,
     with a zero for every element that is masked.
-constants: a list of constant values passed at each step.
+rec_dp_constants: a list of constant values passed at each step.
 unroll: whether to unroll the RNN or to use a symbolic loop (&lt;code&gt;while\_loop&lt;/code&gt; or &lt;code&gt;scan&lt;/code&gt; depending on backend).
 input_length: not relevant in the TensorFlow implementation.
     Must be specified if using unrolling with Theano.
 </code></pre>
-<h1 id="returns_1">Returns</h1>
+<h2 id="returns">Returns</h2>
 <pre><code>A tuple, &lt;code&gt;(last\_output, outputs, new\_states)&lt;/code&gt;.
-
     last_output: the latest output of the rnn, of shape &lt;code&gt;(samples, ...)&lt;/code&gt;
     outputs: tensor with shape &lt;code&gt;(samples, time, ...)&lt;/code&gt; where each
         etry &lt;code&gt;outputs\[s, t]&lt;/code&gt; is the output of the step function
@@ -269,192 +66,12 @@ input_length: not relevant in the TensorFlow implementation.
     new_states: list of tensors, latest states returned by
         the step function, of shape &lt;code&gt;(samples, ...)&lt;/code&gt;.
 </code></pre>
-<h1 id="raises">Raises</h1>
+<h2 id="raises">Raises</h2>
 <pre><code>ValueError: if input dimension is less than 3.
 ValueError: if &lt;code&gt;unroll&lt;/code&gt; is &lt;code&gt;True&lt;/code&gt; but input timestep is not a fixed number.
 ValueError: if &lt;code&gt;mask&lt;/code&gt; is provided (not &lt;code&gt;None&lt;/code&gt;) but states is not provided
     (&lt;code&gt;len(states)&lt;/code&gt; == 0).
 </code></pre></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def sampled_rnn(
-    step_function,
-    inputs,
-    initial_states,
-    units,
-    random_seed,
-    go_backwards=False,
-    mask=None,
-    rec_dp_constants=None,
-    unroll=False,
-    input_length=None,
-):
-    &#34;&#34;&#34;Iterates over the time dimension of a tensor.
-    # Arguments
-        step_function: RNN step function.
-
-    Parameters
-    ----------
-                input: tensor with shape `(samples, ...)` (no time dimension),
-                    representing input for the batch of samples at a certain
-                    time step.
-                states: list of tensors.
-
-    Returns
-    -------
-                output: tensor with shape `(samples, output_dim)`
-                    (no time dimension).
-                new_states: list of tensors, same length and shapes
-                    as &#39;states&#39;. The first state in the list must be the
-                    output tensor at the previous timestep.
-        inputs: tensor of temporal data of shape `(samples, time, ...)`
-            (at least 3D).
-        initial_states: tensor with shape (samples, output_dim)
-            (no time dimension),
-            containing the initial values for the states used in
-            the step function.
-        units : number of units in the output dimension.
-        go_backwards: boolean. If True, do the iteration over
-            the time dimension in reverse order.
-        mask: binary tensor with shape `(samples, time, 1)`,
-            with a zero for every element that is masked.
-        constants: a list of constant values passed at each step.
-        unroll: whether to unroll the RNN or to use a symbolic loop (`while_loop` or `scan` depending on backend).
-        input_length: not relevant in the TensorFlow implementation.
-            Must be specified if using unrolling with Theano.
-
-    # Returns
-        A tuple, `(last_output, outputs, new_states)`.
-
-            last_output: the latest output of the rnn, of shape `(samples, ...)`
-            outputs: tensor with shape `(samples, time, ...)` where each
-                etry `outputs[s, t]` is the output of the step function
-                at time `t` for sample `s`.
-            new_states: list of tensors, latest states returned by
-                the step function, of shape `(samples, ...)`.
-
-    # Raises
-        ValueError: if input dimension is less than 3.
-        ValueError: if `unroll` is `True` but input timestep is not a fixed number.
-        ValueError: if `mask` is provided (not `None`) but states is not provided
-            (`len(states)` == 0).
-
-    &#34;&#34;&#34;
-    import numpy as np
-
-    np.random.seed(random_seed)
-    import tensorflow as tf
-
-    tf.compat.v1.set_random_seed(random_seed)
-    import keras.api.backend as K
-
-    # where to import this from
-    from keras.api.ops import control_flow_ops, tensor_array_ops
-
-    ndim = len(inputs.get_shape())
-    if ndim &lt; 3:
-        raise ValueError(&#34;Input should be at least 3D.&#34;)
-
-    if unroll:
-        raise ValueError(&#34;Unrolling not implemented in sampled_rnn&#34;)
-    if mask is not None:
-        raise ValueError(&#34;Masking not implemented in sampled_rnn&#34;)
-
-    # this switches dims to (time, samples, ...)
-    axes = [1, 0] + list(range(2, ndim))
-    inputs = tf.transpose(inputs, (axes))
-
-    if go_backwards:
-        inputs = np.flip(inputs, 0)
-
-    states = tuple(initial_states)
-
-    # inputs shape: (time, samples, output_dims -- may be 3xoutput
-    # because of cpu implementation)
-    time_steps = tf.shape(inputs)[0]
-
-    # Calculate one time step first
-    # Generate a random cutoff probability for comparing to the cdf probility
-    #   Generates one for each sample in the batch
-
-    num_samples = tf.shape(inputs)[1]
-    # commenting bc it was unused.
-    # output_dim = int(initial_states[0].get_shape()[-1])
-    random_cutoff_prob = tf.random.uniform((num_samples,), minval=0.0, maxval=1.0)
-
-    # Ignore constants for the first run
-    outputs, _ = step_function(
-        inputs[0],
-        {
-            &#34;initial_states&#34;: initial_states,
-            &#34;random_cutoff_prob&#34;: random_cutoff_prob,
-            &#34;rec_dp_mask&#34;: rec_dp_constants,
-        },
-    )
-
-    output_ta = tensor_array_ops.TensorArray(
-        dtype=outputs.dtype, size=time_steps, tensor_array_name=&#34;output_ta&#34;
-    )
-    input_ta = tensor_array_ops.TensorArray(
-        dtype=inputs.dtype, size=time_steps, tensor_array_name=&#34;input_ta&#34;
-    )
-    input_ta = input_ta.unstack(inputs)
-    time = tf.constant(0, dtype=&#34;int32&#34;, name=&#34;time&#34;)
-
-    def _step(time, output_ta_t, *states):
-        &#34;&#34;&#34;RNN step function.
-
-        # Arguments
-            time: Current timestep value.
-            output_ta_t: TensorArray.
-            *states: List of states.
-
-        # Returns
-            Tuple: `(time + 1,output_ta_t) + tuple(new_states)`
-        &#34;&#34;&#34;
-        current_input = input_ta.read(time)
-        random_cutoff_prob = tf.random.uniform((num_samples,), minval=0, maxval=1)
-
-        output, new_states = step_function(
-            current_input,
-            {
-                &#34;initial_states&#34;: states,
-                &#34;random_cutoff_prob&#34;: random_cutoff_prob,
-                &#34;rec_dp_mask&#34;: rec_dp_constants,
-            },
-        )
-        # returned output is ( raw/sampled, batch, output_dim)
-        axes = [1, 0] + list(range(2, K.ndim(output)))
-        output = tf.transpose(output, (axes))
-        for state, new_state in zip(states, new_states):
-            new_state.set_shape(state.get_shape())
-        output_ta_t = output_ta_t.write(time, output)
-        return (time + 1, output_ta_t) + tuple(new_states)
-
-    final_outputs = control_flow_ops.while_loop(
-        cond=lambda time, *_: time &lt; time_steps,
-        body=_step,
-        loop_vars=(time, output_ta) + states,
-        parallel_iterations=1,
-        swap_memory=True,
-    )
-
-    last_time = final_outputs[0]
-    output_ta = final_outputs[1]
-    new_states = final_outputs[2:]
-
-    # this is in order to get the second output in states (i.e. the sampled
-    # output)
-    outputs = output_ta.stack()[:, :, 1, :]
-    last_output = output_ta.read(last_time - 1)[:, 1, :]
-
-    # outputs is switched back to (samples, timesteps, output_dims)
-    axes = [1, 0] + list(range(2, len(outputs.get_shape())))
-    outputs = tf.transpose(outputs, axes)
-    return last_output, outputs, new_states</code></pre>
-</details>
 </dd>
 </dl>
 </section>
@@ -462,11 +79,8 @@ ValueError: if &lt;code&gt;mask&lt;/code&gt; is provided (not &lt;code&gt;None&l
 </section>
 </article>
 <nav id="sidebar">
-<h1>Index</h1>
 <div class="toc">
-<ul>
-<li><a href="#think-carefully-about-the-distribution-of-the-random-sampled-variables">think carefully about the distribution of the random sampled variables&hellip;</a></li>
-</ul>
+<ul></ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>
@@ -483,7 +97,7 @@ ValueError: if &lt;code&gt;mask&lt;/code&gt; is provided (not &lt;code&gt;None&l
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
 </footer>
 </body>
 </html>
