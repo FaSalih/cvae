@@ -62,22 +62,19 @@ hljs.highlightAll();
         # CONVOLUTION PARAMETERS
         self.batchnorm_conv = True
         # block includes Batch Norm, but BN can be disabled above.
-        self.conv_layer_blocks = 4
+        self.conv_layer_blocks = 3  # conv depth
         self.conv_filters = 8
         self.conv_kernel_size = 8
-        self.conv_filter_growth_factor = 1.15875438383
-        self.conv_kernel_growth_factor = 1.1758149644
+        self.conv_filter_growth_factor = 0.5  # 1.15875438383
+        self.conv_kernel_growth_factor = 0.85  # 1.1758149644
         self.conv_activation = &#34;tanh&#34;
 
         # DECODER PARAMETERS
         self.gru_depth = 4
         self.rnn_activation = &#34;tanh&#34;
         self.recurrent_dim = 50
-        self.do_tgru = False  # use custom terminal gru laye
         # use CPU intensive implementation; other implementation modes
         # (1 - GPU 2- memory) are not yet implemente
-        self.terminal_GRU_implementation = 0
-        self.tgru_dropout = 0.0
         self.temperature = 1.00  # amount of noise for sampling the final output
 
         # ENCODER -&gt; MIDDLE LAYER PARAMETERS
