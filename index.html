@@ -66,22 +66,6 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="tests.test_models/">Tests.test models</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="tests.test_mol_utils/">Tests.test mol utils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="tests.test_vae_utils/">Tests.test vae utils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="tests.test_vectorize_data/">Tests.test vectorize data</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="train_vae/">Train vae</a>
                 </li>
               </ul>
@@ -119,23 +103,11 @@
               
                 <h1 id="cvae">cvae</h1>
 <p><a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" /></a>
-<a href="https://github.com/ghsanti/cvae/actions/workflows/ruff.yaml"><img alt="Ruff" src="https://github.com/ghsanti/cvae/actions/workflows/ruff.yaml/badge.svg" /></a>
+<a href="https://github.com/ghsanti/cvae/actions/workflows/ruff.yaml"><img alt="CI" src="https://github.com/ghsanti/cvae/actions/workflows/ruff.yaml/badge.svg" /></a>
 <a href="https://github.com/ghsanti/cvae/actions/workflows/documentation.yaml"><img alt="Docs" src="https://github.com/ghsanti/cvae/actions/workflows/documentation.yaml/badge.svg" /></a></p>
 <p>Chemical Variational Autoencoder.</p>
-<p><a href="https://github.com/aspuru-guzik-group/chemical_vae/">Based off this project.</a></p>
-<h2 id="updates">Updates</h2>
-<ul>
-<li>Refactored. Uses Keras 3.3.3</li>
-<li>Removed <code>TerminalGRU</code> (this may result in less precision.)</li>
-<li>It can be trained with different backends (Pytorch, TensorFlow, Jax.)</li>
-<li>Typed.</li>
-<li>CI.</li>
-</ul>
-<blockquote>
-<p>As long as a layer only uses APIs from the <code>keras.ops</code> namespace (or other Keras namespaces such as <code>keras.activations</code>, <code>keras.random</code>, or <code>keras.layers</code>), then it can be used with any backend – TensorFlow, JAX, or PyTorch.</p>
-</blockquote>
-<p>By not using backend specifics, it turns the code to multibackend.</p>
-<p><a href="https://keras.io/guides/making_new_layers_and_models_via_subclassing/">Source: Keras.</a></p>
+<p><a href="https://github.com/aspuru-guzik-group/chemical_vae/">Based off this great project.</a></p>
+<h2 id="api-documentation"><a href="https://ghsanti.github.io/cvae/">API Documentation</a></h2>
 <h2 id="install">Install</h2>
 <ul>
 <li>Set up env</li>
@@ -169,7 +141,19 @@ poetry install --without dev --sync # unless you want dev deps.
 <p>or</p>
 <pre><code class="language-bash">python -m scripts.train_vae
 </code></pre>
-<h2 id="api-documentation"><a href="https://ghsanti.github.io/cvae/">API Documentation</a></h2>
+<h2 id="updates">Updates</h2>
+<ul>
+<li>Refactored. Uses Keras v3</li>
+<li>Removed <code>TerminalGRU</code> (this may result in less precision.)</li>
+<li>Supported backends: Tensorflow, Pytorch, Jax.</li>
+<li>Typed.</li>
+<li>CI.</li>
+</ul>
+<blockquote>
+<p>As long as a layer only uses APIs from the <code>keras.ops</code> namespace (or other Keras namespaces such as <code>keras.activations</code>, <code>keras.random</code>, or <code>keras.layers</code>), then it can be used with any backend – TensorFlow, JAX, or PyTorch.</p>
+</blockquote>
+<p>By not using backend specifics, it turns the code to multibackend.</p>
+<p><a href="https://keras.io/guides/making_new_layers_and_models_via_subclassing/">Source: Keras.</a></p>
 <h2 id="upcoming">Upcoming</h2>
 <ol>
 <li>Currently only the encoder+decoder was tested, not the property predictor. We will test it.</li>
@@ -178,7 +162,7 @@ poetry install --without dev --sync # unless you want dev deps.
 <li>Use it to suggest new molecules with specific properties.</li>
 <li>Update notebooks</li>
 </ol>
-<h2 id="attributions">Attributions</h2>
+<h1 id="attributions">Attributions</h1>
 <p>This is a refactor / fork of the original chemical VAE by <a href="https://github.com/aspuru-guzik-group/chemical_vae/">Aspuru-Guzik's Group</a></p>
 <p>Part of the original readme (updated) is below (includes authors.)</p>
 <hr />
@@ -266,5 +250,5 @@ It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by</p>
 
 <!--
 MkDocs version : 1.6.0
-Build Date UTC : 2024-06-25 23:24:08.529257+00:00
+Build Date UTC : 2024-06-25 23:34:07.922573+00:00
 -->
