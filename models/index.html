@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/models/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Models - cvae</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Models";
+        var mkdocs_page_input_path = "models.md";
+        var mkdocs_page_url = "/cvae/models/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_callbacks/">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_utils/">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../train_vae/">Train vae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vae_utils/">Vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vectorize_data/">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Models</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/models.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="chemvae.models"></a>
+    <div class="doc doc-contents first">
+
+      <p>Encoder,Decoder, and Predictor.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+<h2 id="chemvae.models-classes">Classes</h2>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="chemvae.models.Sampling" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">Sampling(kl_loss_var: Variable, rand_seed: int, **kwargs)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="keras.api.layers.Layer">Layer</span></code></p>
+
+
+      <p>Uses (z_mean, z_log_var) to sample z, the vector encoding a smile.</p>
+
+      <p>Configure Sampling.</p>
+<p>kl_loss_var: a float that will tend to zero as epochs pass.
+It is recalculated on each epoch end.</p>
+<p>rand_seed: random seed</p>
+
+                  <details class="quote">
+                    <summary>Source code in <code>chemvae/models.py</code></summary>
+                    <pre class="highlight"><code class="language-python">def __init__(self, kl_loss_var: Variable, rand_seed: int, **kwargs):
+    """Configure Sampling.
+
+    kl_loss_var: a float that will tend to zero as epochs pass.
+    It is recalculated on each epoch end.
+
+    rand_seed: random seed
+    """
+    super().__init__(**kwargs)
+    self.seed_generator = keras.random.SeedGenerator(rand_seed)
+    self.kl_loss_var = kl_loss_var</code></pre>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<h4 id="chemvae.models.Sampling-functions">Functions</h4>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.models.Sampling.compute_output_shape" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">compute_output_shape(input_shape)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Compute shape. Keras isn't able to infer it.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def compute_output_shape(self, input_shape):
+    """Compute shape. Keras isn't able to infer it."""
+    return input_shape[0]</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+<h2 id="chemvae.models-functions">Functions</h2>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.decoder_model" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">decoder_model(params: Config) -&gt; Functional</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Create decoder model. Retrieves a SMILES tensor from vector.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def decoder_model(params: Config) -&gt; Functional:
+    """Create decoder model. Retrieves a SMILES tensor from vector."""
+
+    # sanity checks
+    if params.middle_layer &lt; 0:
+        raise Exception("params.middle_layer must be &gt;=0")
+    elif not isinstance(params.gru_depth, int):
+        raise Exception("params.gru_depth must be an integer&gt;0.")
+
+    z_in = Input(shape=(params.latent_dim,), name="decoder_input")
+
+    z = z_in
+
+    for i in range(params.middle_layer):
+        # this is un-bottleneck / expand vector.
+        z = Dense(
+            units=int(params.latent_dim * params.hg_growth_factor ** (i)),
+            activation=params.activation,
+            name=f"decoder_dense{i}",
+        )(z)
+        if params.dropout_rate_mid &gt; 0:
+            z = Dropout(rate=params.dropout_rate_mid)(z)
+        if params.batchnorm_mid:
+            z = BatchNormalization(axis=-1, name=f"decoder_dense{i}_norm")(z)
+
+    # Necessary for using GRU vectors
+    # expand to original row-size
+    z_reps = RepeatVector(n=params.MAX_LEN)(z)
+
+    x_out = z_reps
+    if params.gru_depth &gt;= 2:
+        for i in range(params.gru_depth - 1):  # if 2, runs once
+            x_out = GRU(
+                units=params.recurrent_dim,
+                return_sequences=True,
+                activation="tanh",
+                name=f"decoder_gru{i}",
+            )(x_out)
+
+    x_out = GRU(
+        units=params.NCHARS,
+        return_sequences=True,
+        activation="softmax",
+        name="decoder_gru_final",
+    )(x_out)
+    return Model(z_in, x_out, name="decoder")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.encoder_model" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">encoder_model(params: Config) -&gt; Functional</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Define hot-encoded smile to vector processing.</p>
+<p>params: program and network configuration.
+Returns: encoder model</p>
+<ol>
+<li>Conv Blocks</li>
+<li>Flatten</li>
+<li>Dense Blocks</li>
+<li>middle (nn 1)</li>
+<li>middle-&gt;Dense Layer-&gt; z (nn 2)</li>
+</ol>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def encoder_model(params: Config) -&gt; Functional:
+    """Define hot-encoded smile to vector processing.
+
+    params: program and network configuration.
+    Returns: encoder model
+
+    1. Conv Blocks
+    2. Flatten
+    3. Dense Blocks
+    4. middle (nn 1)
+    5. middle-&gt;Dense Layer-&gt; z (nn 2)
+
+    """
+
+    # sanity check
+    if params.middle_layer &lt; 0:
+        raise Exception("params.middle_layer must be &gt;=0")
+
+    # smiles is the batch dimension.
+    # starts the symbolic descriotion
+    x_in = Input(shape=(params.MAX_LEN, params.NCHARS), name="input_molecule_smi")
+
+    # Convolution layers
+    x = x_in  # they seem to do it in keras docs as well.
+
+    # note that `x` is returned anew, not mutated, below.
+
+    # 1D Convolutions
+    # kernel_size=kernel rows, the cols are same as input.
+    for j in range(params.conv_layer_blocks):
+        x = Convolution1D(
+            filters=int(
+                params.conv_filters * params.conv_filter_growth_factor ** (j or 1)
+            ),
+            kernel_size=int(
+                params.conv_kernel_height * params.conv_kernel_growth_factor ** (j or 1)
+            ),
+            activation="tanh",
+            name="encoder_conv{}".format(j),
+        )(x)
+        if params.batchnorm_conv:
+            x = BatchNormalization(axis=-1, name="encoder_norm{}".format(j))(x)
+
+    x = Flatten()(x)  # flatten in order to use the Dense layers.
+    # from here to the output, 1D vector (+ batch dimension)
+
+    # Middle layers
+    # Dense-&gt;Dropout-&gt;Batchnorm pattern.
+    shared = x
+    for i in range(params.middle_layer):
+        # note that this shinks, it's a bottleneck
+        shared = Dense(
+            units=int(  # a fn of the latent dim
+                params.latent_dim * params.hg_growth_factor ** (params.middle_layer - i)
+            ),
+            activation=params.activation,
+            name="encoder_dense{}".format(i),
+        )(shared)
+        # what happens with this in inference time?
+        if params.dropout_rate_mid &gt; 0:
+            shared = Dropout(params.dropout_rate_mid)(shared)
+        if params.batchnorm_mid:
+            shared = BatchNormalization(axis=-1, name=f"encoder_dense{i}_norm")(shared)
+
+    z_mean = Dense(units=params.latent_dim, name="z_mean")(shared)
+
+    # return z &amp; previous encoding layer for std dev sampling
+    return Model(inputs=x_in, outputs=[z_mean, shared], name="encoder")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.load_decoder" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">load_decoder(params: Config)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Load decoder model weights file.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_decoder(params: Config):
+    """Load decoder model weights file."""
+    return cast(Functional, load_model(params.decoder_weights_file))</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.load_encoder" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">load_encoder(params: Config)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Reload a saved encoder.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_encoder(params: Config):
+    """Reload a saved encoder."""
+    return cast(Functional, load_model(params.encoder_weights_file))</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.load_property_predictor" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">load_property_predictor(params)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Load the property predictor network from file path.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_property_predictor(params):
+    """Load the property predictor network from file path."""
+    return cast(Functional, load_model(params.prop_pred_weights_file))</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.property_predictor_model" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">property_predictor_model(params: Config) -&gt; Functional</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>One or two independent property predictors.</p>
+<p>params: Program and Network configuration.</p>
+<p>Composed of: Dense Blocks.
+They share the inner layers, but not the out layer.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def property_predictor_model(params: Config) -&gt; Functional:
+    """One or two independent property predictors.
+
+    params: Program and Network configuration.
+
+    Composed of: Dense Blocks.
+    They share the inner layers, but not the out layer.
+    """
+    reg_prop_tasks: list[str] | None = params.reg_prop_tasks
+    logit_prop_tasks: list[str] | None = params.logit_prop_tasks
+
+    # the input to this model is z-dim, not including the batch dimension.
+    ls_in = Input(shape=(params.latent_dim,), name="prop_pred_input")
+
+    prop_mid = ls_in
+    # shared weights part
+    for p_i in range(params.prop_pred_depth):
+        prop_mid = Dense(
+            int(params.prop_hidden_dim * params.prop_growth_factor**p_i),
+            activation=params.prop_pred_activation,
+            name=f"property_predictor_dense{p_i}",
+        )(prop_mid)
+        if params.prop_pred_dropout &gt; 0:
+            prop_mid = Dropout(params.prop_pred_dropout)(prop_mid)
+        if params.prop_batchnorm:
+            prop_mid = BatchNormalization()(prop_mid)
+
+    # for regression tasks
+    logit_prop_pred = None
+    reg_prop_pred = None
+
+    if isinstance(reg_prop_tasks, list) and len(reg_prop_tasks) &gt; 0:
+        reg_prop_pred = Dense(
+            units=len(reg_prop_tasks),
+            activation="linear",  # linear for the output, since may be -
+            name="reg_property_output",
+        )(prop_mid)
+
+    # for logistic tasks
+    if isinstance(logit_prop_tasks, list) and len(logit_prop_tasks) &gt; 0:
+        logit_prop_pred = Dense(
+            units=len(logit_prop_tasks),
+            activation="sigmoid",  # may be better softmax
+            name="logit_property_output",
+        )(prop_mid)
+
+    # both regression and logistic
+    if logit_prop_pred and reg_prop_pred:
+        return Model(ls_in, [reg_prop_pred, logit_prop_pred], name="property_predictor")
+
+        # regression only scenario
+    elif reg_prop_pred:
+        return Model(ls_in, reg_prop_pred, name="property_predictor")
+
+        # logit only scenario
+    elif logit_prop_pred:
+        return Model(ls_in, logit_prop_pred, name="property_predictor")
+
+    raise Exception(
+        "No model was created. To run property prediction add the tasks' list in the configuration."
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.models.sample_latent_vector" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">sample_latent_vector(z_mean, shared, kl_loss_var: Variable, params: Config)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Create variational layers. Adds noise to z.</p>
+<p>z_mean: from encoder's Dense()(z).
+z_log_var: forks into z_mean and z_mean_log_var
+kl_loss_var: ...
+params: parameter dictionary passed throughout entire model.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/models.py</code></summary>
+              <pre class="highlight"><code class="language-python">def sample_latent_vector(z_mean, shared, kl_loss_var: Variable, params: Config):
+    """Create variational layers. Adds noise to z.
+
+    z_mean: from encoder's Dense()(z).
+    z_log_var: forks into z_mean and z_mean_log_var
+    kl_loss_var: ...
+    params: parameter dictionary passed throughout entire model.
+    """
+    # why concatenate?
+    z_log_var = Dense(units=params.latent_dim, name="z_log_var")(shared)
+    z_mean_z_log_var_output = Concatenate(name="z_mean_z_log_var")([z_mean, z_log_var])
+
+    z_samp = Sampling(
+        kl_loss_var=kl_loss_var,
+        rand_seed=params.RAND_SEED,
+        name="z_samp",
+    )([z_mean, z_log_var])
+
+    if params.batchnorm_vae:
+        z_samp = BatchNormalization(axis=-1)(z_samp)
+
+    return z_samp, z_mean_z_log_var_output</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../default_config/" class="btn btn-neutral float-left" title="Default config"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mol_callbacks/" class="btn btn-neutral float-right" title="Mol callbacks">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+      <span><a href="../default_config/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mol_callbacks/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

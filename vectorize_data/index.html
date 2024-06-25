@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/vectorize_data/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Vectorize data - cvae</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Vectorize data";
+        var mkdocs_page_input_path = "vectorize_data.md";
+        var mkdocs_page_url = "/cvae/vectorize_data/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/">Models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_callbacks/">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_utils/">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../train_vae/">Train vae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vae_utils/">Vae utils</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Vectorize data</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/vectorize_data.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="chemvae.vectorize_data"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+<h2 id="chemvae.vectorize_data-classes">Classes</h2>
+<h2 id="chemvae.vectorize_data-functions">Functions</h2>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.vectorize_data.vectorize_data" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">vectorize_data(config: Config, do_prop_pred: bool = True) -&gt; tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, list, list]</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Split the dataframe to: smiles_tensor[, prediction data]</p>
+<p>Returns:
+  If true: (smiles_train, smiles_val, [reg_tasks_train, val], [log_tasks_t, v] )
+  If false: (smiles_train, smiles_val)</p>
+<p>The smiles are hot-encoded to a 3-D tensor.
+It makes sure that it's multiple of batch size, and data is randomly selected.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vectorize_data.py</code></summary>
+              <pre class="highlight"><code class="language-python">def vectorize_data(
+    config: Config, do_prop_pred: bool = True
+) -&gt; tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, list, list]:
+    """Split the dataframe to: smiles_tensor[, prediction data]
+
+    Returns:
+      If true: (smiles_train, smiles_val, [reg_tasks_train, val], [log_tasks_t, v] )
+      If false: (smiles_train, smiles_val)
+
+    The smiles are hot-encoded to a 3-D tensor.
+    It makes sure that it's multiple of batch size, and data is randomly selected.
+    """
+    MAX_LEN = config.MAX_LEN
+    CHARS = config.CHARS
+    NCHARS = len(CHARS)
+    CHAR_INDICES = dict((c, i) for i, c in enumerate(CHARS))
+
+    ## Load data for properties
+    if do_prop_pred and config.data_normalization_out_file:
+        normalize_out = config.data_normalization_out_file
+    else:
+        normalize_out = None
+
+    ################ matches columns in csv file ###########
+    reg_props = config.reg_prop_tasks  # list of names
+    logit_props = config.logit_prop_tasks
+
+    if do_prop_pred and not reg_props and not logit_props:
+        raise ValueError("please especify logit and/or reg tasks")
+
+    # here we get the csv-data split, and optionally a "normed write out" for reg data.
+    smiles, Y_reg, Y_logit = load_smiles_and_data_df(
+        csv_file_path=config.data_file,  # smiles + data
+        max_len=MAX_LEN,
+        reg_tasks=reg_props,
+        logit_tasks=logit_props,
+        normalize_out=normalize_out,  # path to write normalised reg data out|None
+    )
+
+    # subset of data if needed.
+    if config.limit_data:
+        # sample indices within the range. The number collected is limit_data value.
+        sample_idx = np.random.choice(
+            np.arange(len(smiles)), config.limit_data, replace=False
+        )
+        smiles = list(np.array(smiles)[sample_idx])  # sublist of size config.limit_data
+        if config.do_prop_pred and config.data_file:
+            if Y_reg:
+                Y_reg = Y_reg[sample_idx]  # basically the rows of the original DF.
+            if Y_logit:
+                Y_logit = Y_logit[sample_idx]
+
+    print("Training set size is", len(smiles))
+    print("total chars:", NCHARS)
+
+    X = smiles_to_hot(smiles, MAX_LEN, config.PADDING, CHAR_INDICES, NCHARS)
+    # if less than the batch size the `//` gives 0.
+    if X.shape[0] % config.batch_size != 0:
+        # make it multiple of batch_size, discard excedent.
+        to_length = X.shape[0] // config.batch_size * config.batch_size
+        X = X[:to_length]
+        if config.do_prop_pred:
+            if Y_reg:
+                Y_reg = Y_reg[:to_length]
+            if Y_logit:
+                Y_logit = Y_logit[:to_length]
+
+    np.random.seed(config.RAND_SEED)
+    rand_idx = np.arange(X.shape[0])
+    np.random.shuffle(rand_idx)  # shuffles the rows' indices.
+
+    TRAIN_FRAC = 1 - config.val_split
+    num_train = int(X.shape[0] * TRAIN_FRAC)
+
+    # or gets 0
+    if num_train % config.batch_size != 0:
+        num_train = num_train // config.batch_size * config.batch_size
+        print("num_train ", num_train)
+
+    # makes the indices for each
+    train_idx, test_idx = rand_idx[: int(num_train)], rand_idx[int(num_train) :]
+
+    if config.test_idx_file:
+        np.save(config.test_idx_file, test_idx)
+
+    # grab the rows with an list of random indices.
+    X_train, X_test = X[train_idx], X[test_idx]
+    print(f"shape of training input vector : {X_train.shape}")
+
+    if do_prop_pred:
+        # !# add Y_train and Y_test here
+        Y_train = []
+        Y_test = []
+        if Y_reg:
+            Y_reg_train, Y_reg_test = Y_reg[train_idx], Y_reg[test_idx]
+            Y_train.append(Y_reg_train)
+            Y_test.append(Y_reg_test)
+        if Y_logit:
+            Y_logit_train, Y_logit_test = Y_logit[train_idx], Y_logit[test_idx]
+            Y_train.append(Y_logit_train)
+            Y_test.append(Y_logit_test)
+
+        return X_train, X_test, Y_train, Y_test
+
+    else:
+        return X_train, X_test</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../vae_utils/" class="btn btn-neutral float-left" title="Vae utils"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+      <span><a href="../vae_utils/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

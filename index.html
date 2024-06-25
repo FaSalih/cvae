@@ -1,67 +1,270 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-<meta name="generator" content="pdoc3 0.11.0">
-<title>chemvae API documentation</title>
-<meta name="description" content="">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
-<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => {
-hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
-hljs.highlightAll();
-})</script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Documentation for the Chemical Variational Autoencoder" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>cvae</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "cvae";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = "/cvae/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
-<body>
-<main>
-<article id="content">
-<header>
-<h1 class="title">Package <code>chemvae</code></h1>
-</header>
-<section id="section-intro">
-</section>
-<section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
-<dl>
-<dt><code class="name"><a title="chemvae.other_callbacks" href="other_callbacks.html">chemvae.other_callbacks</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="chemvae.tests" href="tests/index.html">chemvae.tests</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
-</section>
-</article>
-<nav id="sidebar">
-<div class="toc">
-<ul></ul>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-<ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="models/">Models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="mol_callbacks/">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="mol_utils/">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="train_vae/">Train vae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="vae_utils/">Vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="vectorize_data/">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">cvae</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/index.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="cvae">cvae</h1>
+<p><a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" /></a>
+<a href="https://github.com/ghsanti/cvae/actions/workflows/ruff.yaml"><img alt="Ruff" src="https://github.com/ghsanti/cvae/actions/workflows/ruff.yaml/badge.svg" /></a>
+<a href="https://github.com/ghsanti/cvae/actions/workflows/documentation.yaml"><img alt="Docs" src="https://github.com/ghsanti/cvae/actions/workflows/documentation.yaml/badge.svg" /></a></p>
+<p>Chemical Variational Autoencoder.</p>
+<p><a href="https://github.com/aspuru-guzik-group/chemical_vae/">Based off this project.</a></p>
+<h2 id="updates">Updates</h2>
 <ul>
-<li><code><a title="chemvae.other_callbacks" href="other_callbacks.html">chemvae.other_callbacks</a></code></li>
-<li><code><a title="chemvae.tests" href="tests/index.html">chemvae.tests</a></code></li>
+<li>Refactored. Uses Keras 3.3.3</li>
+<li>Removed <code>TerminalGRU</code> (this may result in less precision.)</li>
+<li>It can be trained with different backends (Pytorch, TensorFlow, Jax.)</li>
+<li>Typed.</li>
+<li>CI.</li>
 </ul>
-</li>
+<blockquote>
+<p>As long as a layer only uses APIs from the <code>keras.ops</code> namespace (or other Keras namespaces such as <code>keras.activations</code>, <code>keras.random</code>, or <code>keras.layers</code>), then it can be used with any backend – TensorFlow, JAX, or PyTorch.</p>
+</blockquote>
+<p>By not using backend specifics, it turns the code to multibackend.</p>
+<p><a href="https://keras.io/guides/making_new_layers_and_models_via_subclassing/">Source: Keras.</a></p>
+<h2 id="install">Install</h2>
+<ul>
+<li>Set up env</li>
 </ul>
-</nav>
-</main>
-<footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+<pre><code class="language-bash">git clone https://github.com/ghsanti/cvae cvae #clones into `cvae` folder
+# replace clone by fork, if you plan to develop
+cd cvae
+mamba create -n cvae &quot;python&gt;=3.11.9,&lt;3.12&quot;
+mamba init &amp;&amp; source ~/.bashrc
+mamba activate cvae
+#check your python version now (if wrong, upgrade it.)
+python --version
+</code></pre>
+<ul>
+<li>Install dependencies</li>
+</ul>
+<pre><code class="language-bash">mamba install poetry graphviz -c conda-forge
+mamba install nodejs -c conda-forge # only for development
+# poetry will install deps and the project respecting conda.
+# this also allows running the notebooks and scripts.
+poetry install --without dev --sync # unless you want dev deps.
+# if poetry fails run the one below
+# poetry install --only-main
+</code></pre>
+<ul>
+<li>Run a training:</li>
+</ul>
+<p>You can modify the program's configuration within <code>scripts/train_vae.py</code></p>
+<pre><code class="language-bash">python scripts/train_vae.py
+</code></pre>
+<p>or</p>
+<pre><code class="language-bash">python -m scripts.train_vae
+</code></pre>
+<h2 id="api-documentation"><a href="https://ghsanti.github.io/cvae/">API Documentation</a></h2>
+<h2 id="upcoming">Upcoming</h2>
+<ol>
+<li>Currently only the encoder+decoder was tested, not the property predictor. We will test it.</li>
+<li>Train with more accuracy (and upload best weights.)</li>
+<li>Make it run in a web browser.</li>
+<li>Use it to suggest new molecules with specific properties.</li>
+<li>Update notebooks</li>
+</ol>
+<h2 id="attributions">Attributions</h2>
+<p>This is a refactor / fork of the original chemical VAE by <a href="https://github.com/aspuru-guzik-group/chemical_vae/">Aspuru-Guzik's Group</a></p>
+<p>Part of the original readme (updated) is below (includes authors.)</p>
+<hr />
+<p>This repository contains the framework and code for constructing a variational autoencoder (VAE) for use with molecular SMILES, as described in <a href="http://pubs.acs.org/doi/abs/10.1021/acscentsci.7b00572">doi:10.1021/acscentsci.7b00572</a>, with preprint at <a href="https://arxiv.org/pdf/1610.02415.pdf">https://arxiv.org/pdf/1610.02415.pdf</a>.</p>
+<p>In short, molecular SMILES are encoded into a code vector representation, and can be decoded from the code representation back to molecular SMILES. The autoencoder may also be jointly trained with property prediction to help shape the latent space. The new latent space can then be optimized upon to find the molecules with the most optimized properties of interest.</p>
+<p>In our example, we perform encoding/decoding with the ZINC dataset, and shape the latent space on prediction on logP, QED, and SAS properties.</p>
+<p>Jupyter notebook is required to run the ipynb examples.
+Make sure that the <a href="https://keras.io/backend/">Keras backend</a> is set to use Tensorflow</p>
+<h2 id="components">Components</h2>
+<ul>
+<li><strong>scripts/train_vae.py</strong> : main script for training variational autoencoder</li>
+<li><strong>models.py</strong> - Library of models, contains the encoder, decoder and property prediction models.</li>
+<li><strong>tgru_k2_gpu.py</strong> - Custom keras layer containing custom teacher forcing/sampling</li>
+<li><strong>sampled_rnn_tf.py</strong> - Custom rnn function for tgru_k2_gpu.py, written in tensorflow backend.</li>
+<li><strong>hyperparameters/user</strong> - Configuration.</li>
+<li><strong>mol_utils.py</strong> - library for parsing SMILES into one-hot encoding and vice versa</li>
+<li><strong>mol_callbacks.py</strong> - library containing callbacks used by train_vae.py</li>
+<li>Includes Weight_Annealer callback, which is used to update the weight of the KL loss component</li>
+<li><strong>vae_utils.py</strong> - utility functions for an autoencoder object, used post processing.</li>
+</ul>
+<h2 id="authors">Authors:</h2>
+<p>This software is written by Jennifer Wei, Benjamin Sanchez-Lengeling, Dennis Sheberla, Rafael Gomez-Bomberelli, and Alan Aspuru-Guzik (alan@aspuru.com).
+It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by</p>
+<ul>
+<li><a href="http://aspuru.chem.harvard.edu/rafa-gomez-bombarelli/">Rafa Gómez-Bombarelli</a>,</li>
+<li><a href="http://aspuru.chem.harvard.edu/jennifer-wei">Jennifer Wei</a>,</li>
+<li><a href="https://www.cs.toronto.edu/~duvenaud/">David Duvenaud</a>,</li>
+<li><a href="https://jmhl.org/">José Miguel Hernández-Lobato</a>,</li>
+<li><a href="">Benjamín Sánchez-Lengeling</a>,</li>
+<li><a href="https://www.sheberla.com/">Dennis Sheberla</a>,</li>
+<li><a href="http://aspuru.chem.harvard.edu/jorge-aguilera/">Jorge Aguilera-Iparraguirre</a>,</li>
+<li><a href="https://www.linkedin.com/in/t1m0thy">Timothy Hirzel</a>,</li>
+<li><a href="http://people.seas.harvard.edu/~rpa/'">Ryan P. Adams</a>,</li>
+<li><a href="http://aspuru.chem.harvard.edu/about-alan/">Alán Aspuru-Guzik</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="default_config/" class="btn btn-neutral float-right" title="Default config">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+    
+      <span><a href="default_config/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
 </body>
 </html>
+
+<!--
+MkDocs version : 1.6.0
+Build Date UTC : 2024-06-25 23:24:08.529257+00:00
+-->

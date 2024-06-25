@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/vae_utils/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Vae utils - cvae</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Vae utils";
+        var mkdocs_page_input_path = "vae_utils.md";
+        var mkdocs_page_url = "/cvae/vae_utils/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/">Models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_callbacks/">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_utils/">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../train_vae/">Train vae</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vectorize_data/">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Vae utils</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/vae_utils.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="chemvae.vae_utils"></a>
+    <div class="doc doc-contents first">
+
+      <p>Utilities.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+<h2 id="chemvae.vae_utils-classes">Classes</h2>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="chemvae.vae_utils.VAEUtils" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">VAEUtils()</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code>object</code></p>
+
+
+      <p>Grabs parameters, weights, chars, creates chars &lt;=&gt; indices dics.</p>
+<p>encoder_file: .h5 weights file,
+decoder_file: .h5 weights file,</p>
+
+      <p>Set params.</p>
+
+                  <details class="quote">
+                    <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+                    <pre class="highlight"><code class="language-python">def __init__(
+    self,
+):
+    """Set params."""
+
+    self.params = config
+
+    with open(self.params.char_file) as f:
+        chars: list[str] = yaml.safe_load(f)  # json
+        self.chars = chars
+
+    self.params.NCHARS = len(self.chars)  # length of charset
+    # char &lt;=&gt; index
+    self.char_indices: dict[str, int] = dict(
+        (c, i) for i, c in enumerate(self.chars)
+    )
+    self.indices_char: dict[int, str] = dict(
+        (i, c) for i, c in enumerate(self.chars)
+    )
+
+    # encoder, decoder, predictor
+    self.enc = load_encoder(self.params)  # model
+    self.dec = load_decoder(self.params)  # model
+    self.encode, self.decode = self.enc_dec_functions()
+    if self.params.do_prop_pred:
+        self.property_predictor = load_property_predictor(self.params)
+
+    self.data = None  # set from file
+
+    # Load path/name.csv without normalization as dataframe
+    df, smiles_df = mu.smiles_and_full_df(
+        self.params.data_file, self.params.MAX_LEN
+    )
+    self.smiles: list[str] = smiles_df.tolist()
+    if df.shape[1] &gt; 1:
+        # set everything but the smiles
+        self.data = pd.DataFrame(df.iloc[:, 1:])
+
+    self.estimate_estandarization()
+    return</code></pre>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<h4 id="chemvae.vae_utils.VAEUtils-functions">Functions</h4>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.chunks" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">chunks(indices: list[int], n: int)</code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Yield successive n-sized chunks from l.
+indices: list of indices
+n: number of elements, for a slice of n elements.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">@staticmethod
+def chunks(indices: list[int], n: int):
+    """Yield successive n-sized chunks from l.
+    indices: list of indices
+    n: number of elements, for a slice of n elements.
+    """
+    for i in range(0, len(indices), n):
+        yield indices[i : i + n]</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.enc_dec_functions" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">enc_dec_functions(standardized=True)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Defines "decode" fn wrt experiment parameters.
+do_tgru being one of them.
+standardized: if z for .decode(z) is standardized.
+It also stands for "standardize" for the encode(z) function.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def enc_dec_functions(self, standardized=True):
+    """Defines "decode" fn wrt experiment parameters.
+    do_tgru being one of them.
+    standardized: if z for .decode(z) is standardized.
+    It also stands for "standardize" for the encode(z) function.
+    """
+    print("Using standarized functions? {}".format(standardized))
+
+    def decode(z, standardize=standardized):
+        fake_shape = (z.shape[0], self.params.MAX_LEN, self.params.NCHARS)
+        # no idea what this is for.
+        fake_in = np.zeros(fake_shape)
+        if standardize:
+            return self.dec.predict([self.unstandardize_z(z), fake_in])
+        else:
+            return self.dec.predict([z, fake_in])
+
+    def encode(X: np.ndarray, standardize=standardized):
+        """Encodes and optionally standardizes the resulting z.
+
+        X: hot encoded matrix of smiles.
+        standardize: whether to standardise the resulting z.
+        """
+        z = self.enc.predict(X)[0]
+        if standardize:  # in this case it's not predicting?
+            return self.standardize_z(z)
+        else:
+            return z
+
+    return encode, decode</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.estimate_estandarization" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">estimate_estandarization()</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>After the df was split into self.smiles and self.data (un-normalised)
+This fn accesses self.data</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def estimate_estandarization(self):
+    """After the df was split into self.smiles and self.data (un-normalised)
+    This fn accesses self.data
+    """
+    print("Standarization: estimating mu and std values ...", end="")
+
+    # random smiles
+    smiles = self.random_molecules(n=50000)
+    batch = 2500
+    # hidden dim is just the latent vector dimension, a hyperparameter.
+    Z = np.zeros((len(smiles), self.params.latent_dim))  # (50000,len(z))
+
+    # [[0-2500], [2500-5000],...] iterator.
+    for chunk in self.chunks(list(range(len(smiles))), batch):
+        # smiles from indices
+        sub_smiles = [smiles[i] for i in chunk]
+        one_hot = self.smiles_to_hot(sub_smiles)  # (n_smi,max_len,nchars)
+        # each row z for smile
+        Z[chunk, :] = self.encode(one_hot, False)  # (50000, len(z))
+
+    # mean for each dimension
+    self.mu = np.mean(Z, axis=0)  # [1st col avg, 2nd col avg,...]
+    # std for each dimension
+    self.std = np.std(Z, axis=0)
+    self.Z = self.standardize_z(Z)
+
+    print("done!")
+    return</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.hot_to_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">hot_to_smiles(hot_x: Tensor3D, strip=False)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>From 3D tensor of Probabilities for each character &amp; smile
+to smiles flat list.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def hot_to_smiles(self, hot_x: Tensor3D, strip=False):
+    """From 3D tensor of Probabilities for each character &amp; smile
+    to smiles flat list.
+    """
+    smiles = mu.hot_to_smiles(hot_x, self.indices_char)
+    if strip:  # postprocessing
+        smiles = [s.strip() for s in smiles]
+    return smiles</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.ls_sampler_w_prop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">ls_sampler_w_prop(size=None, batch=2500, return_smiles=False)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Returns encoded (predictions) smiles Z and corresponding data for them.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def ls_sampler_w_prop(self, size=None, batch=2500, return_smiles=False):
+    """Returns encoded (predictions) smiles Z and corresponding data for them."""
+    if self.data is None:
+        print("use this sampler only for external property files")
+        return
+
+    cols = []
+    reg_prop_tasks = self.params.reg_prop_tasks
+    logit_prop_tasks = self.params.logit_prop_tasks
+    if isinstance(reg_prop_tasks, list):
+        cols += reg_prop_tasks
+    if isinstance(logit_prop_tasks, list):
+        cols += logit_prop_tasks
+
+    # data is the table without smiles column
+    # note that it must be in the same order than smiles.
+    idxs = (
+        self.random_idxs(size)
+        if isinstance(size, "int")
+        else list(range(len(self.smiles)))
+    )
+    # grab random smiles
+    smiles = [self.smiles[idx] for idx in idxs]
+    # grab corresponding data
+    data = [self.data.iloc[idx] for idx in idxs]
+    # hidden dimensions for all input smiles
+    Z = np.zeros((len(smiles), self.params.latent_dim))
+
+    # this avoids having more than 1 cube in memory at a time.
+    for chunk in self.chunks(list(range(len(smiles))), batch):
+        sub_smiles = [smiles[i] for i in chunk]
+        # basically a small_X (3D)
+        one_hot = self.smiles_to_hot(sub_smiles)
+        # will slowly populate the predictions.
+        Z[chunk, :] = self.encode(one_hot)
+
+    if return_smiles:
+        return Z, data, smiles
+
+    return Z, data</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.perturb_z" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">perturb_z(z: np.ndarray, noise_norm: float, constant_norm=False)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Tiny deltas to the normalised z
+but z here is 25 repetitions of z for a string.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def perturb_z(self, z: np.ndarray, noise_norm: float, constant_norm=False):
+    """Tiny deltas to the normalised z
+    but z here is 25 repetitions of z for a string.
+    """
+    if noise_norm &gt; 0.0:
+        # n between 0 and 1
+        noise_vec = np.random.normal(0, 1, size=z.shape)  # z (50000, 196)
+        # F norm `sqrt(sum of the squared of all values)`
+        # very small.
+        noise_vec = noise_vec / np.linalg.norm(noise_vec)
+        if constant_norm:
+            return z + (noise_norm * noise_vec)
+        else:  # each smile a different noise scaling factor
+            noise_amp = np.random.uniform(0, noise_norm, size=(z.shape[0], 1))
+            return z + (noise_amp * noise_vec)
+    else:
+        return z</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.predict_prop_Z" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">predict_prop_Z(z: np.ndarray, standardized=True)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Predictors from z (encoded vector)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def predict_prop_Z(self, z: np.ndarray, standardized=True):
+    """Predictors from z (encoded vector)"""
+    if standardized:
+        z = self.unstandardize_z(z)
+
+    # both regression and logistic
+    reg_prop_task = self.params.reg_prop_tasks
+    logit_prop_tasks = self.params.logit_prop_tasks
+    if (
+        isinstance(reg_prop_task, list)
+        and (len(reg_prop_task) &gt; 0)
+        and isinstance(logit_prop_tasks, list)
+        and (len(logit_prop_tasks) &gt; 0)
+    ):
+        reg_pred, logit_pred = self.property_predictor.predict(z)
+        if isinstance(self.params.data_normalization_out_file, str):
+            # un-normalise the predictions list
+            # mean and std for each column of original (filtered) data.
+            df_norm = pd.read_csv(self.params.data_normalization_out_file)
+            reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
+        return reg_pred, logit_pred
+    # regression only scenario
+    elif isinstance(reg_prop_task, list) and (len(reg_prop_task) &gt; 0):
+        reg_pred = self.property_predictor.predict(z)
+        if isinstance(self.params.data_normalization_out_file, str):
+            df_norm = pd.read_csv(self.params.data_normalization_out_file)
+            # to watch out this flag
+            reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
+        return reg_pred
+    # logit only scenario
+    else:  # unsure why it encodes z here, it seems to take it as X. Is it a bug?
+        # probably should just pass z to the fn below, but wait to run it.
+        logit_pred = self.property_predictor.predict(self.encode(z))
+        return logit_pred</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.predict_property_function" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">predict_property_function()</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Similar to the previous function but starts from X (3d input tensor to encoder.)
+SO it encodes and predicts.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def predict_property_function(self):
+    """Similar to the previous function but starts from X (3d input tensor to encoder.)
+    SO it encodes and predicts.
+    """
+
+    # Now reports predictions after un-normalization.
+    def predict_prop(X):
+        # both regression and logistic
+        reg_prop_task = self.params.reg_prop_tasks
+        logit_prop_tasks = self.params.logit_prop_tasks
+        if (
+            isinstance(reg_prop_task, list)
+            and (len(reg_prop_task) &gt; 0)
+            and isinstance(logit_prop_tasks, list)
+            and (len(logit_prop_tasks) &gt; 0)
+        ):
+            reg_pred, logit_pred = self.property_predictor.predict(self.encode(X))
+            if isinstance(self.params.data_normalization_out_file, str):
+                df_norm = pd.read_csv(self.params.data_normalization_out_file)
+                reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
+            return reg_pred, logit_pred
+        # regression only scenario
+        elif isinstance(reg_prop_task, list) and (len(reg_prop_task) &gt; 0):
+            reg_pred = self.property_predictor.predict(self.encode(X))
+            if isinstance(self.params.data_normalization_out_file, str):
+                df_norm = pd.read_csv(self.params.data_normalization_out_file)
+                # same, to watch out reg_pred
+                reg_pred = reg_pred * df_norm["std"].values + df_norm["mean"].values
+            return reg_pred
+
+        # logit only scenario
+        else:
+            logit_pred = self.property_predictor.predict(self.encode(X))
+            return logit_pred
+
+    return predict_prop</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.prep_mol_df" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">prep_mol_df(smiles: list[str], z)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>smiles: list of smiles DECODED from perturbed versions of z
+z: single vector</p>
+<p>Returns: dataframe
+The df will have non duplicated smiles and extra colums with statistics.</p>
+<p>The way it is used is that "smiles" will be each smiles duplicated 25 times and
+perturbed, and z (z0) is the un-perturbed</p>
+<p>Now the smiles have 25 times more rows, I'm unsure how it's compensated.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def prep_mol_df(self, smiles: list[str], z):
+    """smiles: list of smiles DECODED from perturbed versions of z
+    z: single vector
+
+    Returns: dataframe
+    The df will have non duplicated smiles and extra colums with statistics.
+
+    The way it is used is that "smiles" will be each smiles duplicated 25 times and
+    perturbed, and z (z0) is the un-perturbed
+
+    Now the smiles have 25 times more rows, I'm unsure how it's compensated.
+    """
+    df = pd.DataFrame({"smiles": smiles})
+
+    # removes duplicates of perturbed-decoded string-smiles, and a count column
+    # "reduce"
+    sort_df = df.groupby("smiles").size().reset_index().rename(columns={0: "count"})
+    # adds the count to each smile.
+    df = df.merge(sort_df, on="smiles")
+    df.drop_duplicates(subset="smiles", inplace=True)
+    df = df[df["smiles"].apply(mu.fast_verify)]
+    # len counts the rows, I guess df.shape[0] is the same
+    if not df.empty:
+        df["mol"] = df["smiles"].apply(mu.smiles_to_mol)
+        df = df[pd.notnull(df["mol"])]
+
+        # predicted smiles are encoded and compared initial Z
+        smiles_list = df["smiles"].tolist()
+        df["distance"] = self.smiles_distance_z(smiles_list, z)
+        df["frequency"] = df["count"] / float(sum(df["count"]))
+        df = df[["smiles", "distance", "count", "frequency", "mol"]]
+
+        df.sort_values(by="distance", inplace=True)  # type: ignore
+        df.reset_index(drop=True, inplace=True)
+
+    # just to get the type.
+    return df</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.random_idxs" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">random_idxs(n: int)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>n: how many random indices to return in the new list</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def random_idxs(self, n: int):
+    """n: how many random indices to return in the new list"""
+    return random.sample([i for i in range(len(self.smiles))], n)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.random_molecules" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">random_molecules(n: int)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>n: how many random smiles strings to return in the new list</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def random_molecules(self, n: int):
+    """n: how many random smiles strings to return in the new list"""
+    return random.sample(self.smiles, n)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.smiles_distance_z" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">smiles_distance_z(smiles: str | list[str], z0)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>smiles: are the predicted smiles
+z_rep = re-encoded &amp; perturbed z_0 vectors (25) it's a matrix.
+z0 = I think is a single vector (unsure.)
+Returns: Distance</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def smiles_distance_z(self, smiles: str | list[str], z0):
+    """smiles: are the predicted smiles
+    z_rep = re-encoded &amp; perturbed z_0 vectors (25) it's a matrix.
+    z0 = I think is a single vector (unsure.)
+    Returns: Distance
+    """
+    x = self.smiles_to_hot(smiles)
+    # encodes again, adding perturbation (I think) and to 25 results.
+    z_rep = self.encode(x)
+    return np.linalg.norm(z0 - z_rep, axis=1)  # 'reduce' the cols</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.smiles_to_hot" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">smiles_to_hot(smiles: str | list[str], canonize_smiles=False, check_smiles=False)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>charIndex=Indices_to_char_dict[pass_char]
+Make [0,...,1,...] with 1 at char index.</p>
+<p>If check_smiles=True it returns list of 'bad smiles' instead.</p>
+<p>Returns: 3D np.ndarray of hotencoded vectors</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def smiles_to_hot(
+    self, smiles: str | list[str], canonize_smiles=False, check_smiles=False
+):
+    """charIndex=Indices_to_char_dict[pass_char]
+    Make [0,...,1,...] with 1 at char index.
+
+    If check_smiles=True it returns list of 'bad smiles' instead.
+
+    Returns: 3D np.ndarray of hotencoded vectors
+    """
+    if isinstance(smiles, str):
+        smiles = [smiles]
+
+    if canonize_smiles:
+        smiles = [mu.canon_smiles(s) for s in smiles]
+
+    if check_smiles:
+        smiles = mu.smiles_to_hot_filter(smiles, self.char_indices)
+
+    z = mu.smiles_to_hot(
+        smiles,
+        self.params.MAX_LEN,
+        self.params.PADDING,
+        self.char_indices,
+        self.params.NCHARS,
+    )
+    return z</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.standardize_z" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">standardize_z(z: np.ndarray)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Use the mu and std vectors to normalise z</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def standardize_z(self, z: np.ndarray):
+    """Use the mu and std vectors to normalise z"""
+    return (z - self.mu) / self.std</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.unstandardize_z" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">unstandardize_z(z: np.ndarray)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Use the mu and std vectors to un-normalise z</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def unstandardize_z(self, z: np.ndarray):
+    """Use the mu and std vectors to un-normalise z"""
+    return (z * self.std) + self.mu</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.vae_utils.VAEUtils.z_to_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">z_to_smiles(z, decode_attempts=250, noise_norm=0.0, constant_norm=False, early_stop: int | None = None)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>z: single vector
+return: decoded smiles from 25 perturbed-vector-copies</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def z_to_smiles(
+    self,
+    z,
+    decode_attempts=250,
+    noise_norm=0.0,
+    constant_norm=False,
+    early_stop: int | None = None,
+):
+    """z: single vector
+    return: decoded smiles from 25 perturbed-vector-copies
+    """
+    if early_stop is not None:
+        Z = np.tile(z, (25, 1))  # copies all row vectors z 25 times
+
+        # perturbed versions of the initial decoding.
+        Z = self.perturb_z(Z, noise_norm, constant_norm)
+
+        # get the character hot encoded vectors as 3D tensor
+        X = self.decode(Z)  # many decodings !
+
+        # V =&gt; character
+        smiles = self.hot_to_smiles(X, strip=True)
+        # remove zs decoded to same smiles and get statistics.
+        df = self.prep_mol_df(smiles, z)
+        if len(df) &gt; 0:
+            # iloc selects row, they then select column
+            low_dist = df.iloc[0]["distance"]
+            # true when closest to z is less than early stop value
+            if low_dist &lt; early_stop:
+                return df
+
+    # same, copy Z but this time for decoding the string z.
+    Z = np.tile(z, (decode_attempts, 1))
+    Z = self.perturb_z(Z, noise_norm)
+    X = self.decode(Z)
+    smiles = self.hot_to_smiles(X, strip=True)
+    df = self.prep_mol_df(smiles, z)
+    return df</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+<h2 id="chemvae.vae_utils-functions">Functions</h2>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../train_vae/" class="btn btn-neutral float-left" title="Train vae"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../vectorize_data/" class="btn btn-neutral float-right" title="Vectorize data">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+      <span><a href="../train_vae/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../vectorize_data/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

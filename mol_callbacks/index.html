@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/mol_callbacks/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Mol callbacks - cvae</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Mol callbacks";
+        var mkdocs_page_input_path = "mol_callbacks.md";
+        var mkdocs_page_url = "/cvae/mol_callbacks/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/">Models</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_utils/">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../train_vae/">Train vae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vae_utils/">Vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vectorize_data/">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Mol callbacks</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/mol_callbacks.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="chemvae.mol_callbacks"></a>
+    <div class="doc doc-contents first">
+
+      <p>Callbacks for the training process.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+<h2 id="chemvae.mol_callbacks-classes">Classes</h2>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="chemvae.mol_callbacks.EncoderDecoderCheckpoint" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">EncoderDecoderCheckpoint(encoder_model: Functional, decoder_model: Functional, parameters: Config, prop_pred_model: Functional | None = None, prop_to_monitor='val_x_pred_categorical_accuracy', save_best_only=True, monitor_op=np.greater, monitor_best_init=-np.Inf)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="keras.api.callbacks.Callback">Callback</span></code></p>
+
+
+      <p>Save Encoder, Decoder and optionally the Property predictor.</p>
+
+      <p>Save models.</p>
+<p>If <code>save_best_only=True</code>, uses the accuracy to decide
+whether to save it or not.</p>
+<ul>
+<li><code>encoder_model</code>: the encoder.</li>
+<li><code>decoder_model</code>: the decoder.</li>
+<li><code>parameters</code>: our program configuration.</li>
+<li>
+<p><code>prop_pred_model</code>: the property predictor.</p>
+</li>
+<li>
+<p><code>prop_to_monitor</code>: a property that is a valid name in the model.
+    These properties come from the training epoch-logs?
+    Where do we specify which metrics the training tracks/monitors?
+    To which of the models is it referred?</p>
+</li>
+<li><code>save_best_only</code>: whether to compare to previous or save all checkpoints.</li>
+<li><code>monitor_op</code>: The operation to use when monitoring the property
+    (e.g. accuracy to be maximized so use <code>np.greater</code>,
+    loss to minimized, so use <code>np.less</code>)</li>
+<li><code>monitor_best_init</code>: starting point for monitor
+(use <code>-np.Inf</code> for maximization tests, and <code>np.Inf</code> for minimization tests)</li>
+</ul>
+
+                  <details class="quote">
+                    <summary>Source code in <code>chemvae/mol_callbacks.py</code></summary>
+                    <pre class="highlight"><code class="language-python">def __init__(
+    self,
+    encoder_model: Functional,
+    decoder_model: Functional,
+    parameters: Config,
+    prop_pred_model: Functional | None = None,
+    prop_to_monitor="val_x_pred_categorical_accuracy",
+    save_best_only=True,
+    monitor_op=np.greater,
+    monitor_best_init=-np.Inf,
+):
+    """Save models.
+
+    If `save_best_only=True`, uses the accuracy to decide
+    whether to save it or not.
+
+    - `encoder_model`: the encoder.
+    - `decoder_model`: the decoder.
+    - `parameters`: our program configuration.
+    - `prop_pred_model`: the property predictor.
+
+    - `prop_to_monitor`: a property that is a valid name in the model.
+        These properties come from the training epoch-logs?
+        Where do we specify which metrics the training tracks/monitors?
+        To which of the models is it referred?
+    - `save_best_only`: whether to compare to previous or save all checkpoints.
+    - `monitor_op`: The operation to use when monitoring the property
+        (e.g. accuracy to be maximized so use `np.greater`,
+        loss to minimized, so use `np.less`)
+    - `monitor_best_init`: starting point for monitor
+    (use `-np.Inf` for maximization tests, and `np.Inf` for minimization tests)
+    """
+
+    super().__init__()
+
+    self.p = parameters
+    self.save_path = Path(self.p.checkpoint_path)
+
+    self.encoder = encoder_model
+    self.decoder = decoder_model
+    self.prop_pred_model = prop_pred_model
+
+    self.save_best_only = save_best_only
+
+    self.monitor = prop_to_monitor
+    self.monitor_op = monitor_op
+    self.best = monitor_best_init
+
+    self.verbose = self.p.verbosity</code></pre>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<h4 id="chemvae.mol_callbacks.EncoderDecoderCheckpoint-functions">Functions</h4>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="chemvae.mol_callbacks.WeightAnnealerEpoch" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">WeightAnnealerEpoch(schedule: Schedule, kl_loss_var: Variable, param_kl_loss_weight: float, weight_name: str)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="keras.api.callbacks.Callback">Callback</span></code></p>
+
+
+      <p>Adjust kl weight.</p>
+<p>Called <code>on_epoch_begin</code> during training.</p>
+
+      <p>Configure WeightAnnealerEpoch.</p>
+<ul>
+<li><code>schedule</code>:<ul>
+<li>fn taking an epoch's index as input</li>
+<li>Returns updated kl loss.</li>
+</ul>
+</li>
+<li><code>kl_loss_var</code>: The loss-variable to be updated.</li>
+<li><code>param_kl_loss_weight</code>: initial weight, from the parameters file.</li>
+<li><code>weight_name</code>: friendly identified for printing.</li>
+</ul>
+
+                  <details class="quote">
+                    <summary>Source code in <code>chemvae/mol_callbacks.py</code></summary>
+                    <pre class="highlight"><code class="language-python">def __init__(
+    self,
+    schedule: Schedule,
+    kl_loss_var: Variable,
+    param_kl_loss_weight: float,
+    weight_name: str,
+):
+    """Configure WeightAnnealerEpoch.
+
+    - `schedule`:
+        - fn taking an epoch's index as input
+        - Returns updated kl loss.
+    - `kl_loss_var`: The loss-variable to be updated.
+    - `param_kl_loss_weight`: initial weight, from the parameters file.
+    - `weight_name`: friendly identified for printing.
+    """
+    super().__init__()
+    self.schedule = schedule  # takes epoch, returns new weight
+    self.weight_var = kl_loss_var
+    self.param_kl_loss_weight = param_kl_loss_weight
+    self.weight_name = weight_name</code></pre>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<h4 id="chemvae.mol_callbacks.WeightAnnealerEpoch-functions">Functions</h4>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.mol_callbacks.WeightAnnealerEpoch.on_epoch_begin" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">on_epoch_begin(epoch: int, logs=None)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Make new numeric weight (float) for the VAE.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_callbacks.py</code></summary>
+              <pre class="highlight"><code class="language-python">def on_epoch_begin(self, epoch: int, logs=None):
+    """Make new numeric weight (float) for the VAE."""
+    logs = logs or {}
+    new_weight = self.schedule(epoch)  #
+    new_value = new_weight * self.param_kl_loss_weight
+    self.weight_var.assign(new_value)
+    print("Current {} annealer weight is {}".format(self.weight_name, new_value))</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+<h2 id="chemvae.mol_callbacks-functions">Functions</h2>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_callbacks.sigmoid_schedule" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">sigmoid_schedule(time_step: float | int, start: float, slope: float = 1.0)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Make new kl weight.</p>
+<p>This function is passed into <code>partial</code>.
+- <code>time_step</code>: epoch/index.
+- <code>start</code>: param from config (fixed val)
+- <code>slope</code>: param from config (fixed val)
+convert back from numpy float to float</p>
+<p>The output should increase towards 1.0</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_callbacks.py</code></summary>
+              <pre class="highlight"><code class="language-python">def sigmoid_schedule(time_step: float | int, start: float, slope: float = 1.0):
+    """Make new kl weight.
+
+    This function is passed into `partial`.
+    - `time_step`: epoch/index.
+    - `start`: param from config (fixed val)
+    - `slope`: param from config (fixed val)
+    convert back from numpy float to float
+
+    The output should increase towards 1.0
+    """
+    return float(1.0 / (1.0 + np.exp(slope * (start - time_step))))</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../models/" class="btn btn-neutral float-left" title="Models"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mol_utils/" class="btn btn-neutral float-right" title="Mol utils">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+      <span><a href="../models/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mol_utils/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/train_vae/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Train vae - cvae</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Train vae";
+        var mkdocs_page_input_path = "train_vae.md";
+        var mkdocs_page_url = "/cvae/train_vae/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/">Models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_callbacks/">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_utils/">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Train vae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vae_utils/">Vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vectorize_data/">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Train vae</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/train_vae.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="chemvae.train_vae"></a>
+    <div class="doc doc-contents first">
+
+      <p>Train the variational autoencoder.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+<h2 id="chemvae.train_vae-classes">Classes</h2>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="chemvae.train_vae.NameLayer" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">NameLayer(name: str)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="keras.api.layers.Layer">Layer</span></code></p>
+
+
+      <p>Name layer between models.</p>
+<p>This doesn't have any computational meaning.
+It's like a <code>&lt;div&gt;</code>.</p>
+<p>:name: the name of the division layer.</p>
+
+      <p>Name the layer.</p>
+
+                  <details class="quote">
+                    <summary>Source code in <code>chemvae/train_vae.py</code></summary>
+                    <pre class="highlight"><code class="language-python">def __init__(self, name: str):
+    """Name the layer."""
+    super().__init__(name=name)</code></pre>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<h4 id="chemvae.train_vae.NameLayer-functions">Functions</h4>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="chemvae.train_vae.NameLayer.call" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python">call(x)</code>
+
+</h5>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Return itself.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/train_vae.py</code></summary>
+              <pre class="highlight"><code class="language-python">def call(self, x):
+    """Return itself."""
+    return x</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+<h2 id="chemvae.train_vae-functions">Functions</h2>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.train_vae.kl_loss" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">kl_loss(truth_dummy, x_mean_log_var_output)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Loss function.</p>
+<p>x_mean_log_var_output: contains both.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/train_vae.py</code></summary>
+              <pre class="highlight"><code class="language-python">def kl_loss(truth_dummy, x_mean_log_var_output):
+    """Loss function.
+
+    x_mean_log_var_output: contains both."""
+
+    x_mean, x_log_var = ops.split(x_mean_log_var_output, 2, axis=1)
+    loss = -0.5 * ops.mean(
+        1 + x_log_var - ops.square(x_mean) - ops.exp(x_log_var), axis=-1
+    )
+    return loss  # kl_loss</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.train_vae.load_models" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">load_models(config: Config, do_prop_pred: bool = False)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Load and create each model.</p>
+<p>config: configuration for networks and program.
+do_prop_pred: whether to use the property predictor and csv data file.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/train_vae.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_models(config: Config, do_prop_pred: bool = False):
+    """Load and create each model.
+
+    config: configuration for networks and program.
+    do_prop_pred: whether to use the property predictor and csv data file.
+
+    """
+    kl_loss_var = Variable(config.kl_loss_weight, dtype=np.float32)
+    if config.reload_model:
+        encoder = load_encoder(config)
+        decoder = load_decoder(config)
+    else:  # new models
+        encoder = encoder_model(config)
+        decoder = decoder_model(config)
+
+    x_in = encoder.inputs[0]  # flat list of symbolic inputs (1 here.)
+    z_mean, z_log_var = encoder(x_in)
+    # this is what makes it variational.
+    z_samp, z_mean_z_log_var_output = sample_latent_vector(
+        z_mean, z_log_var, kl_loss_var, config
+    )
+
+    # Decoder
+    x_out = decoder(z_samp)
+
+    x_out = NameLayer(name="x_pred")(x_out)  # decoder output
+    model_outputs = [x_out, z_mean_z_log_var_output]
+
+    AE_only_model = Model(x_in, model_outputs, name="AE_ONLY")
+
+    # extends the output
+    if do_prop_pred:
+        if config.reload_model:
+            property_predictor = load_property_predictor(config)
+        else:
+            property_predictor = property_predictor_model(config)
+
+        if (
+            isinstance(config.reg_prop_tasks, list)
+            and (len(config.reg_prop_tasks) &gt; 0)
+            and isinstance(config.logit_prop_tasks, list)
+            and (len(config.logit_prop_tasks) &gt; 0)
+        ):
+            reg_prop_pred, logit_prop_pred = property_predictor(z_mean)
+            reg_prop_pred = NameLayer(name="reg_prop_pred")(reg_prop_pred)
+            logit_prop_pred = NameLayer(name="logit_prop_pred")(logit_prop_pred)
+            model_outputs.extend([reg_prop_pred, logit_prop_pred])
+
+        # regression only scenario
+        elif isinstance(config.reg_prop_tasks, list) and (
+            len(config.reg_prop_tasks) &gt; 0
+        ):
+            reg_prop_pred = property_predictor(z_mean)
+            reg_prop_pred = NameLayer(name="reg_prop_pred")(reg_prop_pred)
+            model_outputs.append(reg_prop_pred)
+
+        # logit only scenario
+        elif (
+            isinstance(config.logit_prop_tasks, list)
+            and len(config.logit_prop_tasks) &gt; 0
+        ):
+            logit_prop_pred = property_predictor(z_mean)
+            logit_prop_pred = NameLayer(name="logit_prop_pred")(logit_prop_pred)
+            model_outputs.append(logit_prop_pred)
+
+        else:
+            raise ValueError(
+                "no logit tasks or regression tasks specified for property prediction"
+            )
+
+        # making the models:
+        AE_PP_model = Model(x_in, model_outputs)
+        return (
+            AE_only_model,
+            AE_PP_model,
+            encoder,
+            decoder,
+            property_predictor,
+            kl_loss_var,
+        )
+
+    else:
+        return AE_only_model, encoder, decoder, kl_loss_var</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../tests.test_vectorize_data/" class="btn btn-neutral float-left" title="Tests.test vectorize data"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../vae_utils/" class="btn btn-neutral float-right" title="Vae utils">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+      <span><a href="../tests.test_vectorize_data/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../vae_utils/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

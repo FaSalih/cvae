@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Santiago Miranda" /><link rel="canonical" href="https://ghsanti.github.io/cvae/mol_utils/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Mol utils - cvae</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Mol utils";
+        var mkdocs_page_input_path = "mol_utils.md";
+        var mkdocs_page_url = "/cvae/mol_utils/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> cvae
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../default_config/">Default config</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/">Models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mol_callbacks/">Mol callbacks</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../other_callbacks/">Other callbacks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_models/">Tests.test models</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_mol_utils/">Tests.test mol utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vae_utils/">Tests.test vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests.test_vectorize_data/">Tests.test vectorize data</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../train_vae/">Train vae</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vae_utils/">Vae utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../vectorize_data/">Vectorize data</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">cvae</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Mol utils</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ghsanti/cvae/edit/master/docs/mol_utils.md">Edit on cvae</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="chemvae.mol_utils"></a>
+    <div class="doc doc-contents first">
+
+      <p>Convert and check smiles. Load and write dataframe.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<h2 id="chemvae.mol_utils-functions">Functions</h2>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.canon_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">canon_smiles(smi: str) -&gt; str</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Smile to canonical smile.</p>
+<p>Doesn't rdkit have a canonicalise smile fn?</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def canon_smiles(smi: str) -&gt; str:
+    """Smile to canonical smile.
+
+    Doesn't rdkit have a canonicalise smile fn?
+    """
+    return Chem.MolToSmiles(
+        Chem.MolFromSmiles(smi), isomericSmiles=True, canonical=True
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.fast_verify" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">fast_verify(s: str)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Ring and balanced parenthesis check.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def fast_verify(s: str):
+    """Ring and balanced parenthesis check."""
+    return matched_ring(s) and balanced_parentheses(s)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.filter_valid_length" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">filter_valid_length(strings: list[str], max_len: int)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Return strings with length &lt;= the max length.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def filter_valid_length(strings: list[str], max_len: int):
+    """Return strings with length &lt;= the max length."""
+    return [s for s in strings if len(s) &lt;= max_len]</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.filter_valid_smiles_return_invalid" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">filter_valid_smiles_return_invalid(strings: list[str], max_len: int)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Filter strings with length above max_length.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>1. A list of valid strings (list[str])</code>
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+            <li>
+                  <code>2. A list of indices of invalid strings. (list[int])</code>
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def filter_valid_smiles_return_invalid(strings: list[str], max_len: int):
+    """Filter strings with length above max_length.
+
+    Returns
+    -------
+    1. A list of valid strings (list[str])
+    2. A list of indices of invalid strings. (list[int])
+
+    """
+    filter_list: list[int] = []
+    new_smiles: list[str] = []
+    for idx, s in enumerate(strings):
+        if len(s) &gt; max_len:
+            filter_list.append(idx)
+        else:
+            new_smiles.append(s)
+    return new_smiles, filter_list</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.good_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">good_smiles(smile: str)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Verify smile and return either canonical or none.</p>
+<p>Returns: smile or None.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def good_smiles(smile: str):
+    """Verify smile and return either canonical or none.
+
+    Returns: smile or None.
+    """
+    if verify_smiles(smile):  # not falsy
+        return canon_smiles(smile)
+    else:
+        return None</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.hot_to_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">hot_to_smiles(hot_x: Tensor3D, indices_chars: dict[int, str])</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Return: smile string from argmax(hot_smile)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def hot_to_smiles(hot_x: Tensor3D, indices_chars: dict[int, str]):
+    """Return: smile string from argmax(hot_smile)"""
+    smiles: list[str] = []
+    for x in hot_x:  # go over rows (smiles)
+        temp_str = ""
+        for j in x:  # go over characters, as Probs arrays
+            index = np.argmax(j)  # get max index
+            temp_str += indices_chars[index]
+        smiles.append(temp_str)
+    return smiles</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.load_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">load_smiles(smi_file, max_len: int | None = None, return_filtered=False)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <ol>
+<li>
+<p>Get smiles under max length from file.</p>
+</li>
+<li>
+<p>Opt: Pad to max_len, if max_len is specified</p>
+</li>
+<li>Opt: get the indices of bad smiles
+Returns: nice_smiles_list [, bad_smiles_indices_list ]</li>
+</ol>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_smiles(smi_file, max_len: int | None = None, return_filtered=False):
+    """1. Get smiles under max length from file.
+
+    2. Opt: Pad to max_len, if max_len is specified
+    3. Opt: get the indices of bad smiles
+    Returns: nice_smiles_list [, bad_smiles_indices_list ]
+    """
+    if smi_file[-4:] == ".pkl":  # binary file
+        with open(smi_file, "rb") as f:
+            smiles = pkl.load(f)  # visible outside the scope as well
+    else:  # assume file is a text file
+        with open(smi_file, "r") as f:
+            smiles = f.readlines()
+        smiles = [i.strip() for i in smiles]
+
+    if max_len is not None:
+        if return_filtered:
+            smiles, filtrate = filter_valid_smiles_return_invalid(smiles, max_len)
+            if len(filtrate) &gt; 0:
+                print("Filtered out {} smiles above max_len".format(len(filtrate)))
+            return smiles, filtrate
+
+        else:
+            old_len = len(smiles)
+            smiles = filter_valid_length(smiles, max_len)
+            diff_len = old_len - len(smiles)
+            if diff_len != 0:
+                print("Filtered out {} smiles above max_len".format(diff_len))
+
+    return smiles</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.load_smiles_and_data_df" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">load_smiles_and_data_df(csv_file_path: str, max_len: int, reg_tasks: list[str] | None = None, logit_tasks: list[str] | None = None, normalize_out: str | None = None, dtype: str = 'float64')</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <ol>
+<li>
+<p>loads csv as df from path and filters using max_len.</p>
+</li>
+<li>
+<p>Splits into data_df_filtered, smiles_series_filtered</p>
+</li>
+<li><code>smiles_series.tolist()</code></li>
+<li>Computes properties of the data_df_filtered.</li>
+<li>Writes out the statistics for the selected columns (if normalise_out!=None)</li>
+</ol>
+
+
+<details class="arguments:" open>
+  <summary>Arguments:</summary>
+  <p>csv_file_path: path to data file
+max_len: filters long smiles
+reg_tasks : [colnames] that correspond to regression tasks.
+logit_tasks : [same] for logit tasks
+normalize_out: path to write out normalized reg cols (only) csv or None.</p>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_smiles_and_data_df(
+    csv_file_path: str,
+    max_len: int,
+    reg_tasks: list[str] | None = None,
+    logit_tasks: list[str] | None = None,
+    normalize_out: str | None = None,
+    dtype: str = "float64",
+):
+    """1. loads csv as df from path and filters using max_len.
+
+    2. Splits into data_df_filtered, smiles_series_filtered
+    3. `smiles_series.tolist()`
+    4. Computes properties of the data_df_filtered.
+    5. Writes out the statistics for the selected columns (if normalise_out!=None)
+
+    Arguments:
+    ---------
+    csv_file_path: path to data file
+    max_len: filters long smiles
+    reg_tasks : [colnames] that correspond to regression tasks.
+    logit_tasks : [same] for logit tasks
+    normalize_out: path to write out normalized reg cols (only) csv or None.
+
+    """
+    if logit_tasks is None:
+        logit_tasks = []
+    if reg_tasks is None:
+        reg_tasks = []
+
+    # filters only on max_len, splits dataframe
+    df, smiles_series = smiles_and_full_df(csv_file_path, max_len)
+    smiles: list[str] = smiles_series.tolist()
+
+    reg_data_df = df[reg_tasks]  # subsets of columns
+    logit_data_df = df[logit_tasks]  # subsets of columns
+
+    # normalise regression data in df
+    if len(reg_tasks) != 0 and normalize_out is not None:
+        df_norm = pd.DataFrame()
+        # stats for each column.
+        df_norm["mean"] = reg_data_df.mean(axis=0)
+        df_norm["std"] = reg_data_df.std(axis=0)
+        reg_data_df = (reg_data_df - df_norm["mean"]) / df_norm["std"]
+        # write out normalised colums csv.
+        df_norm.to_csv(normalize_out)  # this will be loaded by the sampler !
+
+    # return new arrays
+    if len(logit_tasks) != 0 and len(reg_tasks) != 0:
+        # .values returns the table as an array.
+        # I removed the np.vstack(reg_data_df.values)
+        return (
+            smiles,
+            reg_data_df.values.astype(dtype),
+            logit_data_df.values.astype(dtype),
+        )
+    elif len(reg_tasks) != 0:
+        return smiles, reg_data_df.values.astype(dtype), None
+    elif len(logit_tasks) != 0:
+        return smiles, logit_data_df.values.astype(dtype), None
+    else:
+        return smiles, None, None</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.make_charset_list_from_list" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">make_charset_list_from_list(smi_list)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Create a list of unique characters.</p>
+<p>Does not hot encode the chars.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def make_charset_list_from_list(smi_list):
+    """Create a list of unique characters.
+
+    Does not hot encode the chars.
+    """
+    char_lists = [list(smi) for smi in smi_list]
+    chars = list(set([char for sub_list in char_lists for char in sub_list]))
+    chars.append(" ")
+
+    return chars</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.matched_ring" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">matched_ring(s: str)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Check that rings are represented correctly.</p>
+<p>Example: c1cccccc1 i.e (c1's close the ring.)
+c: aromatic, C: aliphatic</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def matched_ring(s: str):
+    """Check that rings are represented correctly.
+
+    Example: c1cccccc1 i.e (c1's close the ring.)
+    c: aromatic, C: aliphatic
+    """
+    return s.count("1") % 2 == 0 and s.count("2") % 2 == 0</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.pad_smile" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">pad_smile(string: str, max_len: int, padding: Padding_type = 'right') -&gt; str</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>For "string length &gt; max" raise exception.</p>
+<p>Return: smile padded to the max length</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def pad_smile(string: str, max_len: int, padding: Padding_type = "right") -&gt; str:
+    """For "string length &gt; max" raise exception.
+
+    Return: smile padded to the max length
+    """
+    to_add = max_len - len(string)
+    if is_valid_len(string, max_len):
+        if padding == "right":
+            return string + " " * to_add
+        elif padding == "left":
+            return " " * to_add
+        elif padding == "none":
+            return string
+        else:
+            raise Exception("padding must be left|right|none.")
+    else:
+        raise Exception("Smile was too long.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.smiles_and_full_df" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">smiles_and_full_df(csv_file_path: str, max_len: int)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Split df, smiles.</p>
+<p>smiles are &lt;= max_len &amp; and stripped out.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def smiles_and_full_df(csv_file_path: str, max_len: int):
+    """Split df, smiles.
+
+    smiles are &lt;= max_len &amp; and stripped out.
+    """
+    # I guess smiles are within the pandas dataframe.
+    df = pd.read_csv(csv_file_path)
+
+    # strip strings
+    # df.iloc[:, 0] = df.iloc[:, 0].str.strip()
+    smi_col_name = df.columns[0]
+    df[smi_col_name] = df[smi_col_name].str.strip()
+
+    # select good smiles
+    # df = df[df.iloc[:, 0].str.len() &lt;= max_len]
+    df = df[df[smi_col_name].str.len() &lt;= max_len]
+    smiles_df = df[smi_col_name]
+
+    return df, smiles_df</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.smiles_to_hot" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">smiles_to_hot(smiles: list[str], max_len: int, padding: Padding_type, char_indices: dict[str, int], nchars: int)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Populate binary tensor (smiles, max_len, nchars).</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def smiles_to_hot(
+    smiles: list[str],
+    max_len: int,
+    padding: Padding_type,
+    char_indices: dict[str, int],
+    nchars: int,
+):
+    """Populate binary tensor (smiles, max_len, nchars)."""
+    smiles = [
+        pad_smile(i, max_len, padding) for i in smiles if is_valid_len(i, max_len)
+    ]
+    # nchars=n of components of each hot-enc vector (n of != strings available in dataset.)
+    # nice tensor
+    X = np.zeros((len(smiles), max_len, nchars), dtype=np.float32)
+
+    # populate it
+    for i, smile in enumerate(smiles):
+        for t, char in enumerate(smile):
+            try:
+                # for example "c" has some char index in that dictionary.
+                X[i, t, char_indices[char]] = 1
+            except KeyError as e:
+                # if the lookup fails
+                print("ERROR: Check chars file. Bad SMILES: ", smile, "char n: ", char)
+                raise e
+    return X</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.smiles_to_hot_filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">smiles_to_hot_filter(smiles: list[str], char_indices: dict[str, int])</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Put smiles with "non-supported" characters into a list.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def smiles_to_hot_filter(smiles: list[str], char_indices: dict[str, int]):
+    """Put smiles with "non-supported" characters into a list."""
+    filtered_smiles: list[str] = []
+    for smile in smiles:
+        for char in smile:
+            try:
+                char_indices[char]
+            except KeyError:
+                break
+        else:
+            filtered_smiles.append(smile)
+    return filtered_smiles</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.smiles_to_mol" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">smiles_to_mol(smiles: str) -&gt; None | Mol</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Check that it can be converted to Mol.</p>
+<p>Otherwise catches the error and returns None
+Returns: None|Mol</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def smiles_to_mol(smiles: str) -&gt; None | Mol:
+    """Check that it can be converted to Mol.
+
+    Otherwise catches the error and returns None
+    Returns: None|Mol
+    """
+    try:
+        mol = Chem.MolFromSmiles(smiles)
+        return mol
+    except Exception as ex:
+        print(f"can not convert {smiles}", ex)
+        pass
+    return None</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.term_hot_to_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">term_hot_to_smiles(hot_x: list[np.ndarray], temperature: float, indices_chars: dict[int, str])</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Pass the logits through softmax (more or less.).</p>
+<p>hot_x = hot encoded smile
+Return: smile string</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def term_hot_to_smiles(
+    hot_x: list[np.ndarray], temperature: float, indices_chars: dict[int, str]
+):
+    """Pass the logits through softmax (more or less.).
+
+    hot_x = hot encoded smile
+    Return: smile string
+    """
+    temp_string = ""
+    for j in hot_x:
+        # j=character as probs vector
+        # get max index after softmax (more or less)
+        index = thermal_argmax(j, temperature)
+        # map to string.
+        temp_string += indices_chars[index]
+    return temp_string</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.thermal_argmax" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">thermal_argmax(prob_arr: np.ndarray, temperature: float)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Add a little bit of probabilistic behaviour to the chosen string.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def thermal_argmax(prob_arr: np.ndarray, temperature: float):
+    """Add a little bit of probabilistic behaviour to the chosen string."""
+    prob_arr = np.log(prob_arr) / temperature
+    prob_arr = np.exp(prob_arr) / np.sum(np.exp(prob_arr))
+    print(prob_arr)
+    if np.greater_equal(prob_arr.sum(), 1.0000000001):
+        logging.warn(
+            "Probabilities to sample add to more than 1, {}".format(prob_arr.sum())
+        )
+        prob_arr = prob_arr / (prob_arr.sum() + 0.0000000001)
+    if np.greater_equal(prob_arr.sum(), 1.0000000001):
+        logging.warn("Probabilities to sample still add to more than 1")
+    # imagine a dice where each face has a P, this is what they do here.
+    # it returns a 1 in the selected component of the array of same length.
+    return np.argmax(np.random.multinomial(1, prob_arr, 1))</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="chemvae.mol_utils.verify_smiles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">verify_smiles(smile: str)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Check that smile is not falsy.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>chemvae/mol_utils.py</code></summary>
+              <pre class="highlight"><code class="language-python">def verify_smiles(smile: str):
+    """Check that smile is not falsy."""
+    return (
+        (smile != "") and pd.notnull(smile) and (Chem.MolFromSmiles(smile) is not None)
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../mol_callbacks/" class="btn btn-neutral float-left" title="Mol callbacks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../other_callbacks/" class="btn btn-neutral float-right" title="Other callbacks">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ghsanti/cvae" class="fa fa-code-fork" style="color: #fcfcfc"> cvae</a>
+        </span>
+    
+    
+      <span><a href="../mol_callbacks/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../other_callbacks/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
