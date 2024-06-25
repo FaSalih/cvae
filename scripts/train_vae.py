@@ -1,4 +1,23 @@
-from chemvae.train_vae import main_no_prop, main_property_run, config
+import os
+from pathlib import Path
+
+from chemvae.default_config import Config
+from chemvae.train_vae import main_no_prop, main_property_run
+
+# next set of code lines are important to set path
+# =================
+env = os.getenv("CVAE_DATA")  # for env vars, you may not need it.
+# get path to this file's dir.
+dir_path = Path(env) if env else Path(__file__).parent
+# Path from this dir to out data.
+DATA_DIR = dir_path / ".." / "models" / "qm9"
+config = Config(DATA_DIR)
+# modify configuration using
+# config.param = new_value
+# look within `chemvae/default_config` for options.
+
+# =================
+
 
 # __name__ is set when executed from cli.
 if __name__ == "__main__":
@@ -9,17 +28,3 @@ if __name__ == "__main__":
     else:
         print("no property pred.")
         main_no_prop(config)
-
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('-e', '--exp_file',
-    #                     help='experiment file', default='exp.json')
-    # parser.add_argument('-d', '--directory',
-    #                     help='exp directory', default=None)
-    # args = vars(parser.parse_args())
-    # if args['directory'] is not None:
-
-    # curdir = os.getcwd()
-    # os.chdir(args['directory'])
-    # args['exp_file'] = os.path.join(args['directory'], args['exp_file'])
-
-    # os.chdir(curdir)

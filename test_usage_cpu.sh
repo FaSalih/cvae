@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l nodes=1:ppn=16,walltime=199:00:00,cput=400:00:00
+#PBS -l nodes=1:ppn=24,walltime=180:00:00,cput=1800:00:00
 #PBS -N cpu_vae
 #PBS -m abe
 #PBS -M santiago.miranda@gla.ac.uk

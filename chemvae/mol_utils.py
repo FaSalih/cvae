@@ -110,7 +110,6 @@ def smiles_to_hot(
     smiles = [
         pad_smile(i, max_len, padding) for i in smiles if is_valid_len(i, max_len)
     ]
-
     # nchars=n of components of each hot-enc vector (n of != strings available in dataset.)
     # nice tensor
     X = np.zeros((len(smiles), max_len, nchars), dtype=np.float32)

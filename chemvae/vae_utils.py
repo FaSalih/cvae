@@ -1,14 +1,23 @@
 """Utilities."""
 
+import os
 import random
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import yaml  # should probably be just json, not yaml.
 
-from .hyperparameters.user import config
 from . import mol_utils as mu
+from .default_config import Config
 from .models import load_decoder, load_encoder, load_property_predictor
+
+env = os.getenv("CVAE_DATA")  # for env vars, you may not need it.
+# get path to this file's dir.
+dir_path = Path(env) if env else Path(__file__).parent
+# Path from this dir to out data.
+DATA_DIR = dir_path / ".." / "models" / "qm9"
+config = Config(DATA_DIR)
 
 
 class VAEUtils(object):
@@ -24,10 +33,6 @@ class VAEUtils(object):
         """Set params."""
 
         self.params = config
-
-        # load unique chars
-
-        assert isinstance(self.params.char_file, str)
 
         with open(self.params.char_file) as f:
             chars: list[str] = yaml.safe_load(f)  # json
@@ -213,23 +218,15 @@ class VAEUtils(object):
         It also stands for "standardize" for the encode(z) function.
         """
         print("Using standarized functions? {}".format(standardized))
-        if not self.params.do_tgru:  # decode for tgru
 
-            def decode(z, standardized=standardized):  # type: ignore
-                if standardized:  # use mu and std to unstandardise z
-                    return self.dec.predict(self.unstandardize_z(z))
-                else:  # non-std predict directly
-                    return self.dec.predict(z)
-        else:  # when no tgru they pass a 3d tensor of 0s.
-
-            def decode(z, standardize=standardized):
-                fake_shape = (z.shape[0], self.params.MAX_LEN, self.params.NCHARS)
-                # no idea what this is for.
-                fake_in = np.zeros(fake_shape)
-                if standardize:
-                    return self.dec.predict([self.unstandardize_z(z), fake_in])
-                else:
-                    return self.dec.predict([z, fake_in])
+        def decode(z, standardize=standardized):
+            fake_shape = (z.shape[0], self.params.MAX_LEN, self.params.NCHARS)
+            # no idea what this is for.
+            fake_in = np.zeros(fake_shape)
+            if standardize:
+                return self.dec.predict([self.unstandardize_z(z), fake_in])
+            else:
+                return self.dec.predict([z, fake_in])
 
         def encode(X: np.ndarray, standardize=standardized):
             """Encodes and optionally standardizes the resulting z.

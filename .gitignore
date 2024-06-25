@@ -171,10 +171,12 @@ LICENSE.txt
 models
 notebooks
 playground
-report.txt
+eport.txt
 test.py
 #temporarily
 docs/
 cpu_vae*
 gpu_vae*
 *headnode*
+site/
+docs/

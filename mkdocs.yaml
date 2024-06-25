@@ -1,0 +1,46 @@
+site_name: cvae
+site_url: https://ghsanti.github.io/cvae/
+site_author: Santiago Miranda
+site_description: Documentation for the Chemical Variational Autoencoder
+repo_url: https://github.com/ghsanti/cvae
+repo_name: cvae
+hooks:
+  - make_doc_files.py
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [.]
+          options:
+            show_symbol_type_toc: true
+            show_symbol_type_heading: true
+            show_category_heading: true
+            group_by_category: true
+            show_docstring_examples: true
+            summary: true
+            annotations_path: brief
+            show_signature_annotations: true
+            unwrap_annotated: true
+            merge_init_into_class: true
+            docstring_style: numpy
+
+
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - python
+  color-mode: auto
+  user_color_mode_toggle: true
+  titles_only: true
+  exclude_docs: |
+    test_*.py
+    __init__.py
+
+docs_dir: docs
+site_dir: site
+watch:
+  - chemvae

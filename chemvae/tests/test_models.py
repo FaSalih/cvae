@@ -2,13 +2,13 @@ import unittest
 
 import keras
 
-from ..hyperparameters import params
+from ..hyperparameters.user import config
 from ..models import decoder_model, encoder_model, load_encoder
 
 
 class TestEncoderLoading(unittest.TestCase):
     def test_encoder_loading(self):
-        m = load_encoder(params)
+        m = load_encoder(config)
         self.assertIsInstance(m, keras.Model)
 
 
@@ -21,14 +21,14 @@ class TestEncoderLoading(unittest.TestCase):
 
 class TestEncoderCreation(unittest.TestCase):
     def test_model_creation(self):
-        m = encoder_model(params)
+        m = encoder_model(config)
         m.summary()
         self.assertIsInstance(m, keras.Model)
 
 
 class TestDecoderCreation(unittest.TestCase):
     def test_model_creation(self):
-        m = decoder_model(params)
+        m = decoder_model(config)
         m.summary()
         self.assertIsInstance(m, keras.Model)
 
