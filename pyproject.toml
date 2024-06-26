@@ -10,14 +10,14 @@ license = "Apache 2.0"
 name = "cvae"
 readme = "README.md"
 packages = [{ include = "chemvae" }]
-package-mode = true
+# package-mode = true
 version="0.0.0"
 
 
 [project.urls]
 changelog = "https://github.com/ghsanti/cvae/blob/master/CHANGELOG.md"
-documentation = "https://cvae.readthedocs.io"
-homepage = "https://cvae.readthedocs.io"
+documentation = "https://ghsanti.github.io/cvae/"
+homepage = "https://github.com/ghsanti/cvae"
 issues = "https://github.com/ghsanti/cvae/issues"
 repository = "http://github.com/ghsanti/cvae.git"
 
@@ -25,16 +25,16 @@ repository = "http://github.com/ghsanti/cvae.git"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.scripts]
-my-script = "chemvae.log_revision:start"
+# [tool.poetry.scripts]
+# my-script = "chemvae.log_revision:start"
 
 [tool.poetry.dependencies]
-keras = "3.3.3"
-numpy = "1.26.*"
+keras = "^3.4.1"
+numpy = "^1.26.4"
 pandas = "^2.2.2"
 python = "~3.12.4" # install from conda, use --no-deps (still testing this!)
 pyyaml = "^6.0.1"
-rdkit = "^2023.9.6"
+rdkit = "^2024.3.1"
 tensorflow = {extras = ["and-cuda"], version = "^2.16.1"}
 
 pydot = "^2.0.0"
@@ -45,13 +45,14 @@ pre-commit = "^3.7.1"
 ruff = "^0.4.9"
 types-pyyaml = "^6.0.12.20240311"
 types-tensorflow = "^2.16.0.20240618"
-pyright = "^1.1.368"
+pyright = "^1.1.369"
 
-sphinx = "^7.3.7"
-pdoc3 = "^0.10.0"
 python-semantic-release = "^9.8.3"
 mkdocs = "^1.6.0"
 mkdocstrings = {extras = ["python"], version = "^0.25.1"}
+[tool.poetry.group.notebooks.dependencies]
+ipython = "^8.25.0"
+
 [tool.ruff]
 # remove excludes, use include is shorter.
 include = ["pyproject.toml", "chemvae/**/*.py"]
@@ -102,7 +103,7 @@ skip-magic-trailing-comma = false
 include=["chemvae/**"]
 exclude=["**/__init__.py", "**/__pycache__"]
 verboseOutput=true
-pythonVersion="3.11"
+pythonVersion="3.12"
 typeCheckingMode="standard"
 reportMissingImports= true
 reportMissingTypeStubs= false

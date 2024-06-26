@@ -1,8 +1,6 @@
 """Utilities."""
 
-import os
 import random
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -12,27 +10,14 @@ from . import mol_utils as mu
 from .default_config import Config
 from .models import load_decoder, load_encoder, load_property_predictor
 
-env = os.getenv("CVAE_DATA")  # for env vars, you may not need it.
-# get path to this file's dir.
-dir_path = Path(env) if env else Path(__file__).parent
-# Path from this dir to out data.
-DATA_DIR = dir_path / ".." / "models" / "qm9"
-config = Config(DATA_DIR)
 
+class VAEUtils:
+    """Grabs parameters, weights, chars, creates chars <=> indices dics."""
 
-class VAEUtils(object):
-    """Grabs parameters, weights, chars, creates chars <=> indices dics.
-
-    encoder_file: .h5 weights file,
-    decoder_file: .h5 weights file,
-    """
-
-    def __init__(
-        self,
-    ):
+    def __init__(self, params: Config):
         """Set params."""
 
-        self.params = config
+        self.params = params
 
         with open(self.params.char_file) as f:
             chars: list[str] = yaml.safe_load(f)  # json
@@ -50,6 +35,7 @@ class VAEUtils(object):
         # encoder, decoder, predictor
         self.enc = load_encoder(self.params)  # model
         self.dec = load_decoder(self.params)  # model
+        print(self.enc, self.dec)
         self.encode, self.decode = self.enc_dec_functions()
         if self.params.do_prop_pred:
             self.property_predictor = load_property_predictor(self.params)
@@ -213,20 +199,17 @@ class VAEUtils(object):
 
     def enc_dec_functions(self, standardized=True):
         """Defines "decode" fn wrt experiment parameters.
-        do_tgru being one of them.
+
         standardized: if z for .decode(z) is standardized.
         It also stands for "standardize" for the encode(z) function.
         """
         print("Using standarized functions? {}".format(standardized))
 
         def decode(z, standardize=standardized):
-            fake_shape = (z.shape[0], self.params.MAX_LEN, self.params.NCHARS)
-            # no idea what this is for.
-            fake_in = np.zeros(fake_shape)
             if standardize:
-                return self.dec.predict([self.unstandardize_z(z), fake_in])
+                return self.dec.predict(self.unstandardize_z(z))
             else:
-                return self.dec.predict([z, fake_in])
+                return self.dec.predict(z)
 
         def encode(X: np.ndarray, standardize=standardized):
             """Encodes and optionally standardizes the resulting z.

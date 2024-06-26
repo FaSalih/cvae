@@ -1,6 +1,5 @@
 """Train the variational autoencoder."""
 
-import os
 import time
 from functools import partial  # function wrapper to pre-load some parameters.
 from typing import cast, overload
@@ -9,7 +8,6 @@ import keras
 
 # import argparse # we will put this back in the future.
 import numpy as np
-import tensorflow as tf
 from keras import (
     Variable,
     ops,  # these are numpy operations.
@@ -45,11 +43,6 @@ from .models import (
     property_predictor_model,
     sample_latent_vector,
 )
-
-
-os.environ["KERAS_BACKEND"] = "tensorflow"
-print("\n{:<12} {:<12}".format("TF Version", "KERAS Version"))
-print("{:<12} {:<12}".format(tf.__version__, keras.__version__))
 
 
 class NameLayer(Layer):
@@ -98,10 +91,10 @@ def load_models(config: Config, do_prop_pred: bool = False):
         decoder = decoder_model(config)
 
     x_in = encoder.inputs[0]  # flat list of symbolic inputs (1 here.)
-    z_mean, z_log_var = encoder(x_in)
+    z_mean, enc_output = encoder(x_in)
     # this is what makes it variational.
     z_samp, z_mean_z_log_var_output = sample_latent_vector(
-        z_mean, z_log_var, kl_loss_var, config
+        z_mean, enc_output, kl_loss_var, config
     )
 
     # Decoder

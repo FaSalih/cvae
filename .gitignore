@@ -168,7 +168,8 @@ chemvae.egg-info
 dist
 idea.txt
 LICENSE.txt
-models
+models/*
+!models/qm9/
 notebooks
 playground
 eport.txt

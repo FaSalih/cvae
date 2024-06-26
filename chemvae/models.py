@@ -105,7 +105,7 @@ def load_encoder(params: Config):
 ##====================
 
 
-def sample_latent_vector(z_mean, shared, kl_loss_var: Variable, params: Config):
+def sample_latent_vector(z_mean, enc_output, kl_loss_var: Variable, params: Config):
     """Create variational layers. Adds noise to z.
 
     z_mean: from encoder's Dense()(z).
@@ -114,7 +114,7 @@ def sample_latent_vector(z_mean, shared, kl_loss_var: Variable, params: Config):
     params: parameter dictionary passed throughout entire model.
     """
     # why concatenate?
-    z_log_var = Dense(units=params.latent_dim, name="z_log_var")(shared)
+    z_log_var = Dense(units=params.latent_dim, name="z_log_var")(enc_output)
     z_mean_z_log_var_output = Concatenate(name="z_mean_z_log_var")([z_mean, z_log_var])
 
     z_samp = Sampling(

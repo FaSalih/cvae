@@ -1,33 +1,41 @@
+# generate HTML docs from Python's source code files.
 site_name: cvae
-site_url: https://ghsanti.github.io/cvae/
 site_author: Santiago Miranda
 site_description: Documentation for the Chemical Variational Autoencoder
+site_url: https://ghsanti.github.io/cvae/
 repo_url: https://github.com/ghsanti/cvae
 repo_name: cvae
-hooks:
+
+docs_dir: docs # reads .md from
+site_dir: site # write .html to
+
+hooks: # script to transform project/**.py => docs/*.md files
   - make_doc_files.py
+
 plugins:
-  - search
+  - search # search functionality.
+  # mkdocs-plugin: extracts docstrs from .py files.
   - mkdocstrings:
       default_handler: python
       handlers:
         python:
           paths: [.]
-          options:
+          options: # config may need changes
             show_symbol_type_toc: true
             show_symbol_type_heading: true
             show_category_heading: true
-            group_by_category: true
             show_docstring_examples: true
-            summary: true
-            annotations_path: brief
             show_signature_annotations: true
+
+            group_by_category: true
+            annotations_path: brief
             unwrap_annotated: true
             merge_init_into_class: true
             docstring_style: numpy
 
+            summary: true
 
-
+# overall layout & look of the page
 theme:
   name: readthedocs
   highlightjs: true
@@ -39,8 +47,13 @@ theme:
   exclude_docs: |
     test_*.py
     __init__.py
+  include_homepage_in_sidebar: false
+  markdown_extensions:
+    - smarty
+    - toc:
+      permalink: true
+      separator: "_"
+    - sane_lists
 
-docs_dir: docs
-site_dir: site
 watch:
   - chemvae

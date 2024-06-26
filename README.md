@@ -4,7 +4,6 @@
 [![Docs](https://github.com/ghsanti/cvae/actions/workflows/documentation.yaml/badge.svg)](https://github.com/ghsanti/cvae/actions/workflows/documentation.yaml)
 
 
-
 Chemical Variational Autoencoder.
 
 [Based off this great project.](https://github.com/aspuru-guzik-group/chemical_vae/)
@@ -18,7 +17,7 @@ Chemical Variational Autoencoder.
 git clone https://github.com/ghsanti/cvae cvae #clones into `cvae` folder
 # replace clone by fork, if you plan to develop
 cd cvae
-mamba create -n cvae "python>=3.11.9,<3.12"
+mamba create -n cvae "python=3.12"
 mamba init && source ~/.bashrc
 mamba activate cvae
 #check your python version now (if wrong, upgrade it.)
@@ -53,26 +52,24 @@ python -m scripts.train_vae
 ## Updates
 
 * Refactored. Uses Keras v3
-* Removed `TerminalGRU` (this may result in less precision.)
-* Supported backends: Tensorflow, Pytorch, Jax.
-* Typed.
-* CI.
+* Removed `TerminalGRU` (may result in less precision)
+* Target backends: Tensorflow (tested), Pytorch (untested), Jax (untested)
 
 > As long as a layer only uses APIs from the `keras.ops` namespace (or other Keras namespaces such as `keras.activations`, `keras.random`, or `keras.layers`), then it can be used with any backend – TensorFlow, JAX, or PyTorch.
 
-By not using backend specifics, it turns the code to multibackend.
-
 [Source: Keras.](https://keras.io/guides/making_new_layers_and_models_via_subclassing/)
+
+By not using backend specifics, it turns the code to multibackend.
 
 
 ## Upcoming
 
-
-0. Currently only the encoder+decoder was tested, not the property predictor. We will test it.
-1. Train with more accuracy (and upload best weights.)
-2. Make it run in a web browser.
-3. Use it to suggest new molecules with specific properties.
-4. Update notebooks
+- [ ] Train with property prediction.
+- [ ] Train with more accuracy (and upload best weights.)
+- [ ] Run in a web browser. (convert models to ONNX and do browser-preprocessing.)
+- [ ] Use it for lead optimisation, suggest new molecules with optimal properties.
+- [ ] Update notebooks
+- [ ] Use input data other than smiles, and different datasets.
 
 # Attributions
 
@@ -96,9 +93,7 @@ Make sure that the [Keras backend](https://keras.io/backend/) is set to use Tens
 
 - **scripts/train_vae.py** : main script for training variational autoencoder
 - **models.py** - Library of models, contains the encoder, decoder and property prediction models.
-- **tgru_k2_gpu.py** - Custom keras layer containing custom teacher forcing/sampling
-- **sampled_rnn_tf.py** - Custom rnn function for tgru_k2_gpu.py, written in tensorflow backend.
-- **hyperparameters/user** - Configuration.
+- **default_config** - Program configuration (hyperparams, dirs, files, etc.)
 - **mol_utils.py** - library for parsing SMILES into one-hot encoding and vice versa
 - **mol_callbacks.py** - library containing callbacks used by train_vae.py
   - Includes Weight_Annealer callback, which is used to update the weight of the KL loss component
