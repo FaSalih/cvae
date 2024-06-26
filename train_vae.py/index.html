@@ -42,10 +42,6 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../default_config.py/">Default config.py</a>
                 </li>
               </ul>
@@ -258,10 +254,10 @@ do_prop_pred: whether to use the property predictor and csv data file.</p>
         decoder = decoder_model(config)
 
     x_in = encoder.inputs[0]  # flat list of symbolic inputs (1 here.)
-    z_mean, z_log_var = encoder(x_in)
+    z_mean, enc_output = encoder(x_in)
     # this is what makes it variational.
     z_samp, z_mean_z_log_var_output = sample_latent_vector(
-        z_mean, z_log_var, kl_loss_var, config
+        z_mean, enc_output, kl_loss_var, config
     )
 
     # Decoder

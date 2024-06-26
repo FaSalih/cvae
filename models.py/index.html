@@ -42,10 +42,6 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../default_config.py/">Default config.py</a>
                 </li>
               </ul>
@@ -522,7 +518,7 @@ They share the inner layers, but not the out layer.</p>
 
 
 <h3 id="chemvae.models.sample_latent_vector" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">sample_latent_vector(z_mean, shared, kl_loss_var: Variable, params: Config)</code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python">sample_latent_vector(z_mean, enc_output, kl_loss_var: Variable, params: Config)</code>
 
 </h3>
 
@@ -537,7 +533,7 @@ params: parameter dictionary passed throughout entire model.</p>
 
             <details class="quote">
               <summary>Source code in <code>chemvae/models.py</code></summary>
-              <pre class="highlight"><code class="language-python">def sample_latent_vector(z_mean, shared, kl_loss_var: Variable, params: Config):
+              <pre class="highlight"><code class="language-python">def sample_latent_vector(z_mean, enc_output, kl_loss_var: Variable, params: Config):
     """Create variational layers. Adds noise to z.
 
     z_mean: from encoder's Dense()(z).
@@ -546,7 +542,7 @@ params: parameter dictionary passed throughout entire model.</p>
     params: parameter dictionary passed throughout entire model.
     """
     # why concatenate?
-    z_log_var = Dense(units=params.latent_dim, name="z_log_var")(shared)
+    z_log_var = Dense(units=params.latent_dim, name="z_log_var")(enc_output)
     z_mean_z_log_var_output = Concatenate(name="z_mean_z_log_var")([z_mean, z_log_var])
 
     z_samp = Sampling(

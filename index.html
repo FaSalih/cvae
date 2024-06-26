@@ -41,10 +41,6 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">cvae</a>
-                </li>
-              </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="default_config.py/">Default config.py</a>
                 </li>
@@ -115,7 +111,7 @@
 <pre><code class="language-bash">git clone https://github.com/ghsanti/cvae cvae #clones into `cvae` folder
 # replace clone by fork, if you plan to develop
 cd cvae
-mamba create -n cvae &quot;python&gt;=3.11.9,&lt;3.12&quot;
+mamba create -n cvae &quot;python=3.12&quot;
 mamba init &amp;&amp; source ~/.bashrc
 mamba activate cvae
 #check your python version now (if wrong, upgrade it.)
@@ -144,24 +140,23 @@ poetry install --without dev --sync # unless you want dev deps.
 <h2 id="updates">Updates</h2>
 <ul>
 <li>Refactored. Uses Keras v3</li>
-<li>Removed <code>TerminalGRU</code> (this may result in less precision.)</li>
-<li>Supported backends: Tensorflow, Pytorch, Jax.</li>
-<li>Typed.</li>
-<li>CI.</li>
+<li>Removed <code>TerminalGRU</code> (may result in less precision)</li>
+<li>Target backends: Tensorflow (tested), Pytorch (untested), Jax (untested)</li>
 </ul>
 <blockquote>
 <p>As long as a layer only uses APIs from the <code>keras.ops</code> namespace (or other Keras namespaces such as <code>keras.activations</code>, <code>keras.random</code>, or <code>keras.layers</code>), then it can be used with any backend – TensorFlow, JAX, or PyTorch.</p>
 </blockquote>
-<p>By not using backend specifics, it turns the code to multibackend.</p>
 <p><a href="https://keras.io/guides/making_new_layers_and_models_via_subclassing/">Source: Keras.</a></p>
+<p>By not using backend specifics, it turns the code to multibackend.</p>
 <h2 id="upcoming">Upcoming</h2>
-<ol>
-<li>Currently only the encoder+decoder was tested, not the property predictor. We will test it.</li>
-<li>Train with more accuracy (and upload best weights.)</li>
-<li>Make it run in a web browser.</li>
-<li>Use it to suggest new molecules with specific properties.</li>
-<li>Update notebooks</li>
-</ol>
+<ul>
+<li>[ ] Train with property prediction.</li>
+<li>[ ] Train with more accuracy (and upload best weights.)</li>
+<li>[ ] Run in a web browser. (convert models to ONNX and do browser-preprocessing.)</li>
+<li>[ ] Use it for lead optimisation, suggest new molecules with optimal properties.</li>
+<li>[ ] Update notebooks</li>
+<li>[ ] Use input data other than smiles, and different datasets.</li>
+</ul>
 <h1 id="attributions">Attributions</h1>
 <p>This is a refactor / fork of the original chemical VAE by <a href="https://github.com/aspuru-guzik-group/chemical_vae/">Aspuru-Guzik's Group</a></p>
 <p>Part of the original readme (updated) is below (includes authors.)</p>
@@ -175,9 +170,7 @@ Make sure that the <a href="https://keras.io/backend/">Keras backend</a> is set 
 <ul>
 <li><strong>scripts/train_vae.py</strong> : main script for training variational autoencoder</li>
 <li><strong>models.py</strong> - Library of models, contains the encoder, decoder and property prediction models.</li>
-<li><strong>tgru_k2_gpu.py</strong> - Custom keras layer containing custom teacher forcing/sampling</li>
-<li><strong>sampled_rnn_tf.py</strong> - Custom rnn function for tgru_k2_gpu.py, written in tensorflow backend.</li>
-<li><strong>hyperparameters/user</strong> - Configuration.</li>
+<li><strong>default_config</strong> - Program configuration (hyperparams, dirs, files, etc.)</li>
 <li><strong>mol_utils.py</strong> - library for parsing SMILES into one-hot encoding and vice versa</li>
 <li><strong>mol_callbacks.py</strong> - library containing callbacks used by train_vae.py</li>
 <li>Includes Weight_Annealer callback, which is used to update the weight of the KL loss component</li>
@@ -250,5 +243,5 @@ It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by</p>
 
 <!--
 MkDocs version : 1.6.0
-Build Date UTC : 2024-06-25 23:44:58.328530+00:00
+Build Date UTC : 2024-06-26 16:56:00.771392+00:00
 -->

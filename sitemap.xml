@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://ghsanti.github.io/cvae/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/default_config.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/models.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/mol_callbacks.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/mol_utils.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/other_callbacks.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/train_vae.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/vae_utils.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ghsanti.github.io/cvae/vectorize_data.py/</loc>
-         <lastmod>2024-06-25</lastmod>
+         <lastmod>2024-06-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

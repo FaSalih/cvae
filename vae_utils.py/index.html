@@ -42,10 +42,6 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">cvae</a>
-                </li>
-              </ul>
-              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../default_config.py/">Default config.py</a>
                 </li>
               </ul>
@@ -126,30 +122,24 @@
 
 
 <h3 id="chemvae.vae_utils.VAEUtils" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">VAEUtils()</code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python">VAEUtils(params: Config)</code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code>object</code></p>
 
 
       <p>Grabs parameters, weights, chars, creates chars &lt;=&gt; indices dics.</p>
-<p>encoder_file: .h5 weights file,
-decoder_file: .h5 weights file,</p>
 
       <p>Set params.</p>
 
                   <details class="quote">
                     <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
-                    <pre class="highlight"><code class="language-python">def __init__(
-    self,
-):
+                    <pre class="highlight"><code class="language-python">def __init__(self, params: Config):
     """Set params."""
 
-    self.params = config
+    self.params = params
 
     with open(self.params.char_file) as f:
         chars: list[str] = yaml.safe_load(f)  # json
@@ -167,6 +157,7 @@ decoder_file: .h5 weights file,</p>
     # encoder, decoder, predictor
     self.enc = load_encoder(self.params)  # model
     self.dec = load_decoder(self.params)  # model
+    print(self.enc, self.dec)
     self.encode, self.decode = self.enc_dec_functions()
     if self.params.do_prop_pred:
         self.property_predictor = load_property_predictor(self.params)
@@ -243,29 +234,25 @@ def chunks(indices: list[int], n: int):
 
     <div class="doc doc-contents ">
 
-      <p>Defines "decode" fn wrt experiment parameters.
-do_tgru being one of them.
-standardized: if z for .decode(z) is standardized.
+      <p>Defines "decode" fn wrt experiment parameters.</p>
+<p>standardized: if z for .decode(z) is standardized.
 It also stands for "standardize" for the encode(z) function.</p>
 
             <details class="quote">
               <summary>Source code in <code>chemvae/vae_utils.py</code></summary>
               <pre class="highlight"><code class="language-python">def enc_dec_functions(self, standardized=True):
     """Defines "decode" fn wrt experiment parameters.
-    do_tgru being one of them.
+
     standardized: if z for .decode(z) is standardized.
     It also stands for "standardize" for the encode(z) function.
     """
     print("Using standarized functions? {}".format(standardized))
 
     def decode(z, standardize=standardized):
-        fake_shape = (z.shape[0], self.params.MAX_LEN, self.params.NCHARS)
-        # no idea what this is for.
-        fake_in = np.zeros(fake_shape)
         if standardize:
-            return self.dec.predict([self.unstandardize_z(z), fake_in])
+            return self.dec.predict(self.unstandardize_z(z))
         else:
-            return self.dec.predict([z, fake_in])
+            return self.dec.predict(z)
 
     def encode(X: np.ndarray, standardize=standardized):
         """Encodes and optionally standardizes the resulting z.
