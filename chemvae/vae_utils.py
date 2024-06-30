@@ -61,7 +61,7 @@ class VAEUtils:
         print("Standarization: estimating mu and std values ...", end="")
 
         # random smiles
-        smiles = self.random_molecules(n=50000)
+        smiles = self.random_molecules(n=25000)
         batch = 2500
         # hidden dim is just the latent vector dimension, a hyperparameter.
         Z = np.zeros((len(smiles), self.params.latent_dim))  # (50000,len(z))
@@ -146,6 +146,10 @@ class VAEUtils:
             df["mol"] = df["smiles"].apply(mu.smiles_to_mol)
             df = df[pd.notnull(df["mol"])]
 
+            # return error if dataframe is not empty after filtering
+            if df.empty:
+                print("No valid smiles found in the decoded SMILES, returning None..\nTry increasing the number of samples or reducing the noise.")
+                return None
             # predicted smiles are encoded and compared initial Z
             smiles_list = df["smiles"].tolist()
             df["distance"] = self.smiles_distance_z(smiles_list, z)
@@ -388,6 +392,8 @@ class VAEUtils:
 
     def random_molecules(self, n: int):
         """n: how many random smiles strings to return in the new list"""
+        print(f"Sampling {n} random molecules from the dataset..")
+        print(f"Total number of molecules in the dataset: {len(self.smiles)}")
         return random.sample(self.smiles, n)
 
     @staticmethod

@@ -1,0 +1,378 @@
+2024-06-26 14:58:05.594042: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-06-26 14:58:25.011016: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+
+ Training withough property predictor.
+
+Training set size is 34335
+total chars: 35
+num_train  30744
+shape of training input vector : (30744, 34, 35)
+CONFIGURATION:
+checkpoint_path : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc
+data_normalization_out_file : None
+data_file : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc/zinc.csv
+char_file : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc/zinc.json
+encoder_weights_file : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc/encoder_00.keras
+decoder_weights_file : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc/decoder_00.keras
+prop_pred_weights_file : None
+test_idx_file : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc/test_idx.npy
+history_file : /afs/crc.nd.edu/user/f/fsalih/SPDecoder/cvae/models/zinc/history_00.csv
+batch_size : 126
+epochs : 70
+latent_dim : 156
+val_split : 0.1
+loss : categorical_crossentropy
+do_prop_pred : False
+MAX_LEN : 34
+TRAIN_MODEL : True
+ENC_DEC_TEST : False
+PADDING : right
+RAND_SEED : 42
+lr : 0.000312087049936
+momentum : 0.936948773087
+optim : adam
+batchnorm_conv : True
+conv_layer_blocks : 3
+conv_filters : 5
+conv_filter_growth_factor : 0.5
+conv_kernel_height : 6
+conv_kernel_growth_factor : 0.85
+conv_activation : tanh
+hg_growth_factor : 1.2281884874932403
+middle_layer : 1
+dropout_rate_mid : 0.08283292970479479
+batchnorm_mid : True
+activation : tanh
+gru_depth : 4
+rnn_activation : tanh
+recurrent_dim : 488
+temperature : 1.0
+vae_annealer_start : 22
+batchnorm_vae : False
+vae_activation : tanh
+xent_loss_weight : 1.0
+kl_loss_weight : 1.0
+anneal_sigmod_slope : 0.5106654305791392
+freeze_logvar_layer : False
+freeze_offset : 1
+reg_prop_tasks : None
+logit_prop_tasks : None
+prop_pred_depth : 3
+prop_hidden_dim : 36
+prop_growth_factor : 0.8
+prop_pred_activation : tanh
+reg_prop_pred_loss : mse
+logit_prop_pred_loss : binary_crossentropy
+prop_pred_loss_weight : 0.5
+prop_pred_dropout : 0.0
+prop_batchnorm : True
+verbosity : 1
+limit_data : None
+reload_model : False
+prev_epochs : 0
+CHARS : ['7', '6', 'o', ']', '3', 's', '(', '-', 'S', '/', 'B', '4', '[', ')', '#', 'I', 'l', 'O', 'H', 'c', '1', '@', '=', 'n', 'P', '8', 'C', '2', 'F', '5', 'r', 'N', '+', '\\', ' ']
+NCHARS : 35
+Model: "encoder"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ input_molecule_smi (InputLayer) │ (None, 34, 35)         │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_conv0 (Conv1D)          │ (None, 30, 2)          │           352 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_norm0                   │ (None, 30, 2)          │             8 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_conv1 (Conv1D)          │ (None, 26, 2)          │            22 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_norm1                   │ (None, 26, 2)          │             8 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_conv2 (Conv1D)          │ (None, 23, 1)          │             9 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_norm2                   │ (None, 23, 1)          │             4 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ flatten (Flatten)               │ (None, 23)             │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_dense0 (Dense)          │ (None, 191)            │         4,584 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout (Dropout)               │ (None, 191)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ encoder_dense0_norm             │ (None, 191)            │           764 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ z_mean (Dense)                  │ (None, 156)            │        29,952 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 35,703 (139.46 KB)
+ Trainable params: 35,311 (137.93 KB)
+ Non-trainable params: 392 (1.53 KB)
+Model: "decoder"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ decoder_input (InputLayer)      │ (None, 156)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ decoder_dense0 (Dense)          │ (None, 156)            │        24,492 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_1 (Dropout)             │ (None, 156)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ decoder_dense0_norm             │ (None, 156)            │           624 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ repeat_vector (RepeatVector)    │ (None, 34, 156)        │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ decoder_gru0 (GRU)              │ (None, 34, 488)        │       945,744 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ decoder_gru1 (GRU)              │ (None, 34, 488)        │     1,431,792 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ decoder_gru2 (GRU)              │ (None, 34, 488)        │     1,431,792 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ decoder_gru_final (GRU)         │ (None, 34, 35)         │        55,125 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 3,889,569 (14.84 MB)
+ Trainable params: 3,889,257 (14.84 MB)
+ Non-trainable params: 312 (1.22 KB)
+Model: "AE_ONLY"
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)        ┃ Output Shape      ┃    Param # ┃ Connected to      ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│ input_molecule_smi  │ (None, 34, 35)    │          0 │ -                 │
+│ (InputLayer)        │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ encoder             │ [(None, 156),     │     35,703 │ input_molecule_s… │
+│ (Functional)        │ (None, 191)]      │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ z_log_var (Dense)   │ (None, 156)       │     29,952 │ encoder[0][1]     │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ z_samp (Sampling)   │ (None, 156)       │          1 │ encoder[0][0],    │
+│                     │                   │            │ z_log_var[0][0]   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ decoder             │ (None, 34, 35)    │  3,889,569 │ z_samp[0][0]      │
+│ (Functional)        │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ x_pred (NameLayer)  │ (None, 34, 35)    │          0 │ decoder[0][0]     │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ z_mean_z_log_var    │ (None, 312)       │          0 │ encoder[0][0],    │
+│ (Concatenate)       │                   │            │ z_log_var[0][0]   │
+└─────────────────────┴───────────────────┴────────────┴───────────────────┘
+ Total params: 3,955,225 (15.09 MB)
+ Trainable params: 3,954,521 (15.09 MB)
+ Non-trainable params: 704 (2.75 KB)
+Model schema saved to AE_ONLY.png.
+Current vae annealer weight is 1.3208464534236994e-05
+Epoch 1/70
+Tensor("AE_ONLY_1/z_samp_1/stateless_random_normal:0", shape=(126, 156), dtype=float32)
+Tensor("AE_ONLY_1/z_samp_1/stateless_random_normal:0", shape=(126, 156), dtype=float32)
+Tensor("AE_ONLY_1/z_samp_1/stateless_random_normal:0", shape=(126, 156), dtype=float32)
+Epoch 00000: val_x_pred_categorical_accuracy previous value was 0.37763 new is 0.37763,
+Current vae annealer weight is 2.201038759146048e-05
+Epoch 2/70
+Epoch 00001: val_x_pred_categorical_accuracy previous value was 0.43939 new is 0.43939,
+Current vae annealer weight is 3.6677565290112376e-05
+Epoch 3/70
+Epoch 00002: val_x_pred_categorical_accuracy previous value was 0.48144 new is 0.48144,
+Current vae annealer weight is 6.111798993344653e-05
+Epoch 4/70
+Epoch 00003: val_x_pred_categorical_accuracy previous value was 0.52333 new is 0.52333,
+Current vae annealer weight is 0.0001018428520948195
+Epoch 5/70
+Epoch 00004: val_x_pred_categorical_accuracy previous value was 0.56750 new is 0.56750,
+Current vae annealer weight is 0.00016969938095202496
+Epoch 6/70
+Epoch 00005: val_x_pred_categorical_accuracy previous value was 0.57888 new is 0.57888,
+Current vae annealer weight is 0.00028275502131637844
+Epoch 7/70
+Epoch 00006: val_x_pred_categorical_accuracy previous value was 0.63149 new is 0.63149,
+Current vae annealer weight is 0.0004710941152704827
+Epoch 8/70
+Epoch 00007: val_x_pred_categorical_accuracy previous value was 0.64574 new is 0.64574,
+Current vae annealer weight is 0.0007847847191363334
+Epoch 9/70
+Epoch 00008: val_x_pred_categorical_accuracy previous value was 0.67690 new is 0.67690,
+Current vae annealer weight is 0.0013070814422209435
+Epoch 10/70
+Epoch 00009: val_x_pred_categorical_accuracy previous value was 0.69124 new is 0.69124,
+Current vae annealer weight is 0.0021762245466587582
+Epoch 11/70
+Epoch 00010: val_x_pred_categorical_accuracy previous value was 0.69912 new is 0.69912,
+Current vae annealer weight is 0.0036212083259452047
+Epoch 12/70
+Epoch 00011: val_x_pred_categorical_accuracy previous value was 0.69912 new is 0.69368,
+Current vae annealer weight is 0.0060198535230323105
+Epoch 13/70
+Epoch 00012: val_x_pred_categorical_accuracy previous value was 0.69912 new is 0.50632,
+Current vae annealer weight is 0.009991400314210233
+Epoch 14/70
+Epoch 00013: val_x_pred_categorical_accuracy previous value was 0.69912 new is 0.66777,
+Current vae annealer weight is 0.016539541808615513
+Epoch 15/70
+Epoch 00014: val_x_pred_categorical_accuracy previous value was 0.73413 new is 0.73413,
+Current vae annealer weight is 0.02726101803792773
+Epoch 16/70
+Epoch 00015: val_x_pred_categorical_accuracy previous value was 0.73413 new is 0.72303,
+Current vae annealer weight is 0.04461720338803846
+Epoch 17/70
+Epoch 00016: val_x_pred_categorical_accuracy previous value was 0.73730 new is 0.73730,
+Current vae annealer weight is 0.07220328200576367
+Epoch 18/70
+Epoch 00017: val_x_pred_categorical_accuracy previous value was 0.74710 new is 0.74710,
+Current vae annealer weight is 0.11479597607205051
+Epoch 19/70
+Epoch 00018: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76836,
+Current vae annealer weight is 0.17770179221364119
+Epoch 20/70
+Epoch 00019: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76661,
+Current vae annealer weight is 0.26476824599321086
+Epoch 21/70
+Epoch 00020: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76497,
+Current vae annealer weight is 0.3750375460299153
+Epoch 22/70
+Epoch 00021: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76266,
+Current vae annealer weight is 0.5
+Epoch 23/70
+Epoch 00022: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.75533,
+Current vae annealer weight is 0.6249624539700847
+Epoch 24/70
+Epoch 00023: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.75703,
+Current vae annealer weight is 0.7352317540067891
+Epoch 25/70
+Epoch 00024: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.75610,
+Current vae annealer weight is 0.8222982077863588
+Epoch 26/70
+Epoch 00025: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.75246,
+Current vae annealer weight is 0.8852040239279495
+Epoch 27/70
+Epoch 00026: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.75694,
+Current vae annealer weight is 0.9277967179942364
+Epoch 28/70
+Epoch 00027: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76052,
+Current vae annealer weight is 0.9553827966119615
+Epoch 29/70
+Epoch 00028: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76190,
+Current vae annealer weight is 0.9727389819620722
+Epoch 30/70
+Epoch 00029: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76122,
+Current vae annealer weight is 0.9834604581913845
+Epoch 31/70
+Epoch 00030: val_x_pred_categorical_accuracy previous value was 0.76836 new is 0.76664,
+Current vae annealer weight is 0.9900085996857898
+Epoch 32/70
+Epoch 00031: val_x_pred_categorical_accuracy previous value was 0.77230 new is 0.77230,
+Current vae annealer weight is 0.9939801464769676
+Epoch 33/70
+Epoch 00032: val_x_pred_categorical_accuracy previous value was 0.77347 new is 0.77347,
+Current vae annealer weight is 0.9963787916740549
+Epoch 34/70
+Epoch 00033: val_x_pred_categorical_accuracy previous value was 0.78092 new is 0.78092,
+Current vae annealer weight is 0.9978237754533412
+Epoch 35/70
+Epoch 00034: val_x_pred_categorical_accuracy previous value was 0.78380 new is 0.78380,
+Current vae annealer weight is 0.998692918557779
+Epoch 36/70
+Epoch 00035: val_x_pred_categorical_accuracy previous value was 0.78640 new is 0.78640,
+Current vae annealer weight is 0.9992152152808638
+Epoch 37/70
+Epoch 00036: val_x_pred_categorical_accuracy previous value was 0.78640 new is 0.78190,
+Current vae annealer weight is 0.9995289058847296
+Epoch 38/70
+Epoch 00037: val_x_pred_categorical_accuracy previous value was 0.79012 new is 0.79012,
+Current vae annealer weight is 0.9997172449786838
+Epoch 39/70
+Epoch 00038: val_x_pred_categorical_accuracy previous value was 0.79112 new is 0.79112,
+Current vae annealer weight is 0.9998303006190481
+Epoch 40/70
+Epoch 00039: val_x_pred_categorical_accuracy previous value was 0.79621 new is 0.79621,
+Current vae annealer weight is 0.9998981571479052
+Epoch 41/70
+Epoch 00040: val_x_pred_categorical_accuracy previous value was 0.79621 new is 0.78982,
+Current vae annealer weight is 0.9999388820100666
+Epoch 42/70
+Epoch 00041: val_x_pred_categorical_accuracy previous value was 0.79849 new is 0.79849,
+Current vae annealer weight is 0.9999633224347099
+Epoch 43/70
+Epoch 00042: val_x_pred_categorical_accuracy previous value was 0.80198 new is 0.80198,
+Current vae annealer weight is 0.9999779896124086
+Epoch 44/70
+Epoch 00043: val_x_pred_categorical_accuracy previous value was 0.80336 new is 0.80336,
+Current vae annealer weight is 0.9999867915354658
+Epoch 45/70
+Epoch 00044: val_x_pred_categorical_accuracy previous value was 0.80562 new is 0.80562,
+Current vae annealer weight is 0.999992073609766
+Epoch 46/70
+Epoch 00045: val_x_pred_categorical_accuracy previous value was 0.80562 new is 0.80395,
+Current vae annealer weight is 0.9999952433888688
+Epoch 47/70
+Epoch 00046: val_x_pred_categorical_accuracy previous value was 0.81191 new is 0.81191,
+Current vae annealer weight is 0.999997145570669
+Epoch 48/70
+Epoch 00047: val_x_pred_categorical_accuracy previous value was 0.81191 new is 0.80476,
+Current vae annealer weight is 0.999998287066068
+Epoch 49/70
+Epoch 00048: val_x_pred_categorical_accuracy previous value was 0.81191 new is 0.81087,
+Current vae annealer weight is 0.9999989720742833
+Epoch 50/70
+Epoch 00049: val_x_pred_categorical_accuracy previous value was 0.81191 new is 0.80675,
+Current vae annealer weight is 0.9999993831455084
+Epoch 51/70
+Epoch 00050: val_x_pred_categorical_accuracy previous value was 0.81191 new is 0.81004,
+Current vae annealer weight is 0.9999996298279195
+Epoch 52/70
+Epoch 00051: val_x_pred_categorical_accuracy previous value was 0.81191 new is 0.81171,
+Current vae annealer weight is 0.9999997778611365
+Epoch 53/70
+Epoch 00052: val_x_pred_categorical_accuracy previous value was 0.81821 new is 0.81821,
+Current vae annealer weight is 0.9999998666953174
+Epoch 54/70
+Epoch 00053: val_x_pred_categorical_accuracy previous value was 0.81821 new is 0.80944,
+Current vae annealer weight is 0.9999999200043723
+Epoch 55/70
+Epoch 00054: val_x_pred_categorical_accuracy previous value was 0.81821 new is 0.81220,
+Current vae annealer weight is 0.9999999519949324
+Epoch 56/70
+Epoch 00055: val_x_pred_categorical_accuracy previous value was 0.81917 new is 0.81917,
+Current vae annealer weight is 0.9999999711923445
+Epoch 57/70
+Epoch 00056: val_x_pred_categorical_accuracy previous value was 0.81917 new is 0.81910,
+Current vae annealer weight is 0.9999999827126375
+Epoch 58/70
+Epoch 00057: val_x_pred_categorical_accuracy previous value was 0.82077 new is 0.82077,
+Current vae annealer weight is 0.9999999896259207
+Epoch 59/70
+Epoch 00058: val_x_pred_categorical_accuracy previous value was 0.82077 new is 0.81370,
+Current vae annealer weight is 0.9999999937745552
+Epoch 60/70
+Epoch 00059: val_x_pred_categorical_accuracy previous value was 0.82142 new is 0.82142,
+Current vae annealer weight is 0.9999999962641346
+Epoch 61/70
+Epoch 00060: val_x_pred_categorical_accuracy previous value was 0.82142 new is 0.81280,
+Current vae annealer weight is 0.9999999977581218
+Epoch 62/70
+Epoch 00061: val_x_pred_categorical_accuracy previous value was 0.82242 new is 0.82242,
+Current vae annealer weight is 0.9999999986546575
+Epoch 63/70
+Epoch 00062: val_x_pred_categorical_accuracy previous value was 0.82242 new is 0.81979,
+Current vae annealer weight is 0.9999999991926651
+Epoch 64/70
+Epoch 00063: val_x_pred_categorical_accuracy previous value was 0.82242 new is 0.82226,
+Current vae annealer weight is 0.9999999995155215
+Epoch 65/70
+Epoch 00064: val_x_pred_categorical_accuracy previous value was 0.82242 new is 0.82004,
+Current vae annealer weight is 0.9999999997092663
+Epoch 66/70
+Epoch 00065: val_x_pred_categorical_accuracy previous value was 0.82394 new is 0.82394,
+Current vae annealer weight is 0.9999999998255318
+Epoch 67/70
+Epoch 00066: val_x_pred_categorical_accuracy previous value was 0.82410 new is 0.82410,
+Current vae annealer weight is 0.9999999998953024
+Epoch 68/70
+Epoch 00067: val_x_pred_categorical_accuracy previous value was 0.82410 new is 0.82320,
+Current vae annealer weight is 0.9999999999371714
+Epoch 69/70
+Epoch 00068: val_x_pred_categorical_accuracy previous value was 0.82410 new is 0.82327,
+Current vae annealer weight is 0.9999999999622968
+Epoch 70/70
+Epoch 00069: val_x_pred_categorical_accuracy previous value was 0.82656 new is 0.82656,
+time of run :  8303.784795284271
+**FINISHED**

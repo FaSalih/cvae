@@ -18,13 +18,13 @@ class Config:
         # FILES
         self.checkpoint_path: str = "./"
         self.data_normalization_out_file: str | None = None
-        self.data_file: str = "qm9.csv"
-        self.char_file: str = "qm9.json"
-        self.encoder_weights_file: str = "encoder_2.keras"
-        self.decoder_weights_file: str = "decoder_2.keras"
-        self.prop_pred_weights_file: str = "qm9_prop_pred.keras"
+        self.data_file: str = "zinc.csv"
+        self.char_file: str = "zinc.json"
+        self.encoder_weights_file: str = "encoder_69.keras"
+        self.decoder_weights_file: str = "decoder_69.keras"
+        self.prop_pred_weights_file: str = None #"qm9_prop_pred.keras"
         self.test_idx_file: str = "test_idx.npy"
-        self.history_file: str = "history_4.csv"
+        self.history_file: str = "history_00.csv"
 
         # GENERAL PARAMETERS
         self.batch_size: int = 100

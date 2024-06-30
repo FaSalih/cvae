@@ -29,8 +29,10 @@ def smiles_to_mol(smiles: str) -> None | Mol:
     try:
         mol = Chem.MolFromSmiles(smiles)
         return mol
-    except Exception as ex:
-        print(f"can not convert {smiles}", ex)
+    # except Exception as ex:
+    except:
+        # print(f"can not convert {smiles}", ex)
+        print(f"can not convert {smiles}")
         pass
     return None
 

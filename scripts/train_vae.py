@@ -12,7 +12,7 @@ if not os.environ.get("KERAS_BACKEND"):
 
 env = os.getenv("CVAE_DATA")
 dir_path = Path(env) if env else Path(__file__).parent
-DATA_DIR = dir_path / ".." / "models" / "qm9"
+DATA_DIR = dir_path / ".." / "models" / "zinc"
 config = Config(DATA_DIR)
 
 # =================
